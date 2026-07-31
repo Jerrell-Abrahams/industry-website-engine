@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Thembeka Funeral Directors — og 1200×630">
+  <defs>
+    <linearGradient id="g" gradientTransform="rotate(2)">
+      <stop offset="0%" stop-color="#2F5D50"/>
+      <stop offset="100%" stop-color="#3E4F47"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="1200" height="630"/></clipPath>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <g clip-path="url(#c)" opacity="0.32">
+    <circle cx="312" cy="131" r="179" fill="#A8763E"/>
+    <circle cx="888" cy="499" r="107" fill="#2F5D50"/>
+  </g>
+  <text x="600" y="315" fill="#ffffff" fill-opacity="0.72"
+        font-family="system-ui, sans-serif" font-size="28" font-weight="600"
+        text-anchor="middle" dominant-baseline="middle" letter-spacing="1">Thembeka Funeral Directors — og 1200×630</text>
+</svg>

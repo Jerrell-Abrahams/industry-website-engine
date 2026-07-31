@@ -331,7 +331,7 @@ quoting numbers to a client.
 
 ## Demo sites
 
-Sixteen client sites, all rendered by the same code. Every one has a distinct
+Seventeen client sites, all rendered by the same code. Every one has a distinct
 hero + services pair, which `npm run validate` enforces.
 
 **Flagships**
@@ -359,6 +359,7 @@ hero + services pair, which `npm run validate` enforces.
 | `security` | Sentinel Response, Centurion | `angled` + `grid` |
 | `construction` | Terra Build, Gqeberha | `video` + `tabs` |
 | `turbo` | Redline Turbo Engineering, Germiston | `split` + `list` |
+| `funeral` | Thembeka Funeral Directors, Soweto | `fullscreen-image` + `tabs` |
 
 `engine-test` is a fixture rather than a client — it lists every section with
 every flag on, so one build exercises the whole component library.
