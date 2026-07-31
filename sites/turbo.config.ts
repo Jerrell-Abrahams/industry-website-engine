@@ -162,7 +162,7 @@ export const turboConfig: SiteConfigInput = {
     subheadline:
       "We strip it, photograph it and tell you what killed it before we quote. Recondition the unit without fixing the cause and you will be back here in four months — so the report comes first, every time.",
     image: {
-      src: "/turbo/hero.svg",
+      src: "/turbo/hero.jpg",
       alt: "A stripped turbocharger core on the balancing bench at Redline Turbo Engineering",
     },
     primaryCta: { label: "Get a free strip and quote", href: "#contact" },
