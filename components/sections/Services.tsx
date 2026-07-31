@@ -127,13 +127,18 @@ function Alternating({ services }: { services: ServicesContent }) {
 /**
  * Menu-style rows with a leader rule between name and price.
  * The rule is a flex spacer with a dotted border, so it reflows at any width.
+ *
+ * `flex-wrap` is load-bearing: the price is whitespace-nowrap so a figure like
+ * "R4 500" never breaks mid-number, which means a wordy price ("Quoted on
+ * assessment") cannot shrink either. Without wrapping it pushes the row past
+ * the viewport on a phone. Same shape as Pricing's SimpleList.
  */
 function List({ services }: { services: ServicesContent }) {
   return (
     <ul className="mx-auto flex max-w-3xl flex-col">
       {services.items.map((item) => (
         <li key={item.title} className="border-b border-line py-6 last:border-b-0">
-          <div className="flex items-baseline gap-3">
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h3 className="text-xl font-bold">{item.title}</h3>
             <span aria-hidden="true" className="min-w-6 grow border-b border-dotted border-line" />
             {item.price ? (
