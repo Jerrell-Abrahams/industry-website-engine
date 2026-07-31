@@ -1,0 +1,250 @@
+@import "tailwindcss";
+
+/*
+ * Maps the per-client `--brand-*` properties (set on <html> by the root layout)
+ * into Tailwind's token namespace.
+ *
+ * `inline` is what makes this work at runtime: the generated utilities reference
+ * var(--brand-*) rather than baking a value in at build time, so `bg-primary`
+ * retints for every client without touching the CSS pipeline.
+ * Alpha modifiers (`bg-primary/50`) still work — v4 resolves them with color-mix().
+ */
+@theme inline {
+  --color-primary: var(--brand-primary);
+  --color-secondary: var(--brand-secondary);
+  --color-accent: var(--brand-accent);
+  --color-canvas: var(--brand-bg);
+  --color-surface: var(--brand-surface);
+  --color-line: var(--brand-border);
+  --color-ink: var(--brand-text);
+  --color-muted: var(--brand-muted);
+  --color-on-primary: var(--brand-on-primary);
+
+  --radius-brand: var(--brand-radius);
+  --shadow-brand: var(--brand-shadow);
+
+  --font-heading: var(--brand-font-heading);
+  --font-body: var(--brand-font-body);
+}
+
+/* Fallbacks so the app still renders while a config is mid-edit. */
+:root {
+  --brand-primary: #1f2937;
+  --brand-secondary: #374151;
+  --brand-accent: #6b7280;
+  --brand-bg: #ffffff;
+  --brand-surface: #f9fafb;
+  --brand-border: #e5e7eb;
+  --brand-text: #111827;
+  --brand-muted: #6b7280;
+  --brand-on-primary: #ffffff;
+  --brand-radius: 0.5rem;
+  --brand-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  --brand-section-y: 5.5rem;
+  --brand-gap: 2rem;
+  --brand-heading-transform: none;
+  --brand-heading-tracking: -0.01em;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Anchors land below the sticky navbar instead of behind it. */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--brand-bg);
+    color: var(--brand-text);
+    font-family: var(--brand-font-body), ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--brand-font-heading), Georgia, serif;
+    text-transform: var(--brand-heading-transform);
+    letter-spacing: var(--brand-heading-tracking);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Keyboard focus must stay visible everywhere — never remove this. */
+  :focus-visible {
+    outline: 3px solid var(--brand-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  /* Global belt-and-braces: stops CSS-driven motion too, not just Framer's. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/*
+ * Buttons and cards.
+ *
+ * branding.buttonStyle / cardStyle land as data attributes on <html>, so the
+ * cascade does the theming and no component has to receive `branding` as a
+ * prop just to know what a button looks like.
+ * min-height/min-width 44px keeps every control at the accessible touch size.
+ */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.2;
+    border-radius: var(--brand-radius);
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      opacity 0.2s ease;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background-color: var(--brand-primary);
+    color: var(--brand-on-primary);
+    border: 2px solid transparent;
+  }
+  .btn-primary:hover {
+    opacity: 0.88;
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: currentColor;
+    border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+  }
+  .btn-secondary:hover {
+    border-color: currentColor;
+    background-color: color-mix(in srgb, currentColor 8%, transparent);
+  }
+
+  [data-button-style="pill"] .btn {
+    border-radius: 9999px;
+  }
+
+  [data-button-style="outline"] .btn-primary {
+    background-color: transparent;
+    color: var(--brand-primary);
+    border-color: var(--brand-primary);
+  }
+  [data-button-style="outline"] .btn-primary:hover {
+    background-color: var(--brand-primary);
+    color: var(--brand-on-primary);
+    opacity: 1;
+  }
+
+  [data-button-style="underline"] .btn-primary {
+    background-color: transparent;
+    color: var(--brand-primary);
+    border-radius: 0;
+    border-width: 0 0 2px 0;
+    border-bottom-color: var(--brand-primary);
+    padding-inline: 0.25rem;
+  }
+  [data-button-style="underline"] .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--brand-primary) 12%, transparent);
+    opacity: 1;
+  }
+
+  .card {
+    background-color: var(--brand-surface);
+    border-radius: var(--brand-radius);
+    border: 1px solid transparent;
+  }
+  [data-card-style="bordered"] .card {
+    border-color: var(--brand-border);
+  }
+  [data-card-style="elevated"] .card {
+    box-shadow: var(--brand-shadow);
+  }
+  [data-card-style="glass"] .card {
+    background-color: color-mix(in srgb, var(--brand-surface) 65%, transparent);
+    border-color: var(--brand-border);
+    backdrop-filter: blur(12px);
+  }
+}
+
+/* Vertical rhythm, driven by branding.spacingScale. */
+@utility section-y {
+  padding-block: var(--brand-section-y);
+}
+
+@utility container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Hides the scrollbar on scroll-snap carousels without disabling scrolling. */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Partners marquee — CSS-only, so it costs no JS. */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility marquee-track {
+  animation: marquee 32s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* FAQ uses native <details>; this rotates the chevron with no JS at all. */
+@utility faq-marker {
+  transition: transform 0.2s ease;
+}
+
+details[open] .faq-marker {
+  transform: rotate(180deg);
+}
+
+details > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+details > summary::-webkit-details-marker {
+  display: none;
+}

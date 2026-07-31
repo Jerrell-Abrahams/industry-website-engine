@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="750" viewBox="0 0 1000 750" role="img" aria-label="Meridian Property Group — service 1000×750">
+  <defs>
+    <linearGradient id="g" gradientTransform="rotate(57)">
+      <stop offset="0%" stop-color="#23303D"/>
+      <stop offset="100%" stop-color="#38495B"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="1000" height="750"/></clipPath>
+  </defs>
+  <rect width="1000" height="750" fill="url(#g)"/>
+  <g clip-path="url(#c)" opacity="0.32">
+    <circle cx="567" cy="340" r="315" fill="#8A6C3C"/>
+    <circle cx="433" cy="410" r="189" fill="#23303D"/>
+  </g>
+  <text x="500" y="375" fill="#ffffff" fill-opacity="0.72"
+        font-family="system-ui, sans-serif" font-size="34" font-weight="600"
+        text-anchor="middle" dominant-baseline="middle" letter-spacing="1">Meridian Property Group — service 1000×750</text>
+</svg>

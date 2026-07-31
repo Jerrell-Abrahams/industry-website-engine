@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Aloe Ridge Guest House — hero 1920×1080">
+  <defs>
+    <linearGradient id="g" gradientTransform="rotate(9)">
+      <stop offset="0%" stop-color="#35594B"/>
+      <stop offset="100%" stop-color="#24402F"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="1920" height="1080"/></clipPath>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <g clip-path="url(#c)" opacity="0.32">
+    <circle cx="581" cy="262" r="327" fill="#966A33"/>
+    <circle cx="1339" cy="818" r="196" fill="#35594B"/>
+  </g>
+  <text x="960" y="540" fill="#ffffff" fill-opacity="0.72"
+        font-family="system-ui, sans-serif" font-size="49" font-weight="600"
+        text-anchor="middle" dominant-baseline="middle" letter-spacing="1">Aloe Ridge Guest House — hero 1920×1080</text>
+</svg>

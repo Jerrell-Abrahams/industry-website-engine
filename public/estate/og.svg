@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Meridian Property Group — og 1200×630">
+  <defs>
+    <linearGradient id="g" gradientTransform="rotate(23)">
+      <stop offset="0%" stop-color="#23303D"/>
+      <stop offset="100%" stop-color="#38495B"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="1200" height="630"/></clipPath>
+  </defs>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <g clip-path="url(#c)" opacity="0.32">
+    <circle cx="454" cy="191" r="212" fill="#8A6C3C"/>
+    <circle cx="746" cy="439" r="127" fill="#23303D"/>
+  </g>
+  <text x="600" y="315" fill="#ffffff" fill-opacity="0.72"
+        font-family="system-ui, sans-serif" font-size="28" font-weight="600"
+        text-anchor="middle" dominant-baseline="middle" letter-spacing="1">Meridian Property Group — og 1200×630</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600" role="img" aria-label="Engine Test Site — team 600×600">
+  <defs>
+    <linearGradient id="g" gradientTransform="rotate(23)">
+      <stop offset="0%" stop-color="#1F5F4B"/>
+      <stop offset="100%" stop-color="#123A2E"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="600" height="600"/></clipPath>
+  </defs>
+  <rect width="600" height="600" fill="url(#g)"/>
+  <g clip-path="url(#c)" opacity="0.32">
+    <circle cx="226" cy="181" r="202" fill="#A9761E"/>
+    <circle cx="374" cy="419" r="121" fill="#1F5F4B"/>
+  </g>
+  <text x="300" y="300" fill="#ffffff" fill-opacity="0.72"
+        font-family="system-ui, sans-serif" font-size="27" font-weight="600"
+        text-anchor="middle" dominant-baseline="middle" letter-spacing="1">Engine Test Site — team 600×600</text>
+</svg>

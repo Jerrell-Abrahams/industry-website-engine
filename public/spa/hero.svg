@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="Lotus &amp; Stone — hero 1920×1080">
+  <defs>
+    <linearGradient id="g" gradientTransform="rotate(42)">
+      <stop offset="0%" stop-color="#7A5C6E"/>
+      <stop offset="100%" stop-color="#5A4152"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="1920" height="1080"/></clipPath>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <g clip-path="url(#c)" opacity="0.32">
+    <circle cx="930" cy="419" r="414" fill="#8C6B48"/>
+    <circle cx="990" cy="661" r="248" fill="#7A5C6E"/>
+  </g>
+  <text x="960" y="540" fill="#ffffff" fill-opacity="0.72"
+        font-family="system-ui, sans-serif" font-size="49" font-weight="600"
+        text-anchor="middle" dominant-baseline="middle" letter-spacing="1">Lotus &amp; Stone — hero 1920×1080</text>
+</svg>
