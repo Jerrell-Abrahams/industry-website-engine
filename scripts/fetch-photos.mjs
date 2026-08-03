@@ -24,6 +24,10 @@ import { fileURLToPath, pathToFileURL } from "node:url";
  * actual JPEG from images.unsplash.com is a CDN hit and is not metered. Budget
  * roughly two API calls per image.
  *
+ * To check remaining quota, read x-ratelimit-remaining off a SEARCH request.
+ * GET /photos/<id> is served from CloudFront and hands back a cached header —
+ * it will cheerfully report 34 remaining while every search returns 403.
+ *
  * One search PER IMAGE, not per slot. Sharing one search across a whole slot
  * halves the request count but hands image 2 a photo described by image 1's alt
  * text, and alt text is a promise about what the picture shows. Identical queries
@@ -127,21 +131,53 @@ function broaden(query) {
  * Only portraits get a default. For the rest, a branded placeholder is better
  * than an unrelated photograph.
  */
-const SLOT_FALLBACK = {
-  team: "professional business portrait",
-  avatar: "person portrait headshot",
-};
+/** Slots whose alt text is a person's name rather than a description. */
+const PORTRAIT_SLOTS = new Set(["team", "avatar"]);
 
-async function search(query, orientation, count, slot) {
-  const run = async (q) => {
+/**
+ * One fallback string gave every team member on every site the same handful of
+ * photos — three configs ended up sharing one stock businessman, and one site
+ * used him twice in a row. Rotating the phrasing puts each portrait in a
+ * different result pool; the global ledger then guarantees no repeat.
+ *
+ * These describe framing, never the person. A name cannot tell you what someone
+ * looks like, so no query here tries to match one — team photos are placeholders
+ * for the client's own staff photography, which the README says out loud.
+ */
+const PORTRAIT_POOL = [
+  "business headshot",
+  "businesswoman portrait office",
+  "businessman portrait office",
+  "corporate portrait professional",
+  "professional headshot studio",
+  "office worker portrait smiling",
+];
+// Keep every entry anchored on "business", "corporate" or "office". Looser
+// phrasing drifts out of the professional-adult pool fast: "professional
+// portrait natural light" returned a photograph of a child, and "candid
+// workplace portrait" returned a 3D render of a cartoon office.
+
+async function search(query, orientation, slot, spin = 0) {
+  const run = async (q, framed = true) => {
     const url = new URL("https://api.unsplash.com/search/photos");
     url.searchParams.set("query", q);
-    url.searchParams.set("orientation", orientation);
-    url.searchParams.set("per_page", String(Math.max(count, 5)));
+    if (framed) url.searchParams.set("orientation", orientation);
+    // 30 rather than 8: the ledger skips photos already used elsewhere, and a
+    // short result list runs out of unused candidates on the popular queries.
+    url.searchParams.set("per_page", "30");
     url.searchParams.set("content_filter", "high");
     const { results } = await api(url);
     return results ?? [];
   };
+
+  // Portrait slots never search the alt text at all. It is a person's name, and
+  // a name is not a description of a photograph — searching it returns either
+  // nothing or, worse, something confidently wrong. Both of these shipped:
+  // "Kobus van Wyk" → "van" → a white delivery van; "Pieter Grobler" → "pieter"
+  // → the Pinterest logo. Skipping the attempt also halves the API cost.
+  if (PORTRAIT_SLOTS.has(slot)) {
+    return run(PORTRAIT_POOL[spin % PORTRAIT_POOL.length]);
+  }
 
   const results = await run(query);
   if (results.length > 0) return results;
@@ -153,10 +189,20 @@ async function search(query, orientation, count, slot) {
     if (broadened.length > 0) return broadened;
   }
 
-  const generic = SLOT_FALLBACK[slot];
-  if (!generic) return [];
-  console.log(`    … still nothing, falling back to "${generic}"`);
-  return run(generic);
+  // The orientation filter is the usual reason a good query finds nothing:
+  // "penthouse apartment balcony" has one portrait photo on Unsplash and plenty
+  // of landscape ones. Drop the filter before dropping the meaning — download()
+  // crops to the slot size on entropy anyway, so a landscape source still fills
+  // a portrait frame, just with less of the original in shot.
+  const loose = await run(fallback || query, false);
+  if (loose.length > 0) {
+    console.log(`    … no ${orientation} photo, taking any orientation and cropping`);
+    return loose;
+  }
+
+  // Nothing generic for the descriptive slots. A branded gradient is honest;
+  // an unrelated photograph under alt text promising something else is not.
+  return [];
 }
 
 async function download(photo, { w, h }, target) {
@@ -175,6 +221,44 @@ async function download(photo, { w, h }, target) {
 
   // Required by the Unsplash API terms whenever a photo is used.
   await api(photo.links.download_location).catch(() => {});
+}
+
+/**
+ * Every photo ever pulled, so none is used twice anywhere in the portfolio.
+ *
+ * A per-run `taken` set is not enough: runs are resumable and per-site, so the
+ * same stock businessman ended up on three client sites and twice on one of
+ * them. Two demo sites sharing a face is the kind of thing a prospect notices.
+ *
+ * Delete the file to allow reuse — it is a ledger, not a lock.
+ */
+const LEDGER = join(root, "scripts/.photo-ledger.json");
+
+async function readLedger() {
+  return new Set(JSON.parse(await readFile(LEDGER, "utf8").catch(() => "[]")));
+}
+
+async function writeLedger(used) {
+  await writeFile(LEDGER, `${JSON.stringify([...used].sort(), null, 0)}\n`, "utf8");
+}
+
+/**
+ * Credits accumulate across runs. A resumed or single-image run only knows about
+ * the photos it fetched itself, so writing its list verbatim would drop the
+ * attribution for every photo already on disk — which is what a rerun of one
+ * failed image looks like from here.
+ */
+async function mergeCredits(id, fresh) {
+  const path = join(root, "public", id, "PHOTO-CREDITS.md");
+  const byPath = new Map();
+
+  const existing = await readFile(path, "utf8").catch(() => "");
+  for (const line of existing.split("\n").filter((l) => l.startsWith("- /"))) {
+    byPath.set(line.slice(2).split(" — ")[0], line);
+  }
+  for (const line of fresh) byPath.set(line.slice(2).split(" — ")[0], line);
+
+  return [...byPath.keys()].sort().map((k) => byPath.get(k));
 }
 
 async function main() {
@@ -216,23 +300,38 @@ async function main() {
     let configSource = await readFile(join(root, `sites/${id}.config.ts`), "utf8");
     /** Identical alt text is the only case where reusing a search is free of mismatch. */
     const cache = new Map();
-    /** Avoids handing the same photo to two images in one site. */
-    const taken = new Set();
+    /** Every photo used anywhere, this run included. */
+    const taken = await readLedger();
+    let spin = 0;
 
     try {
       for (const image of images) {
         const spec = SLOTS[image.slot] ?? SLOTS.about;
         const query = toQuery(image.alt, config.business.name);
 
-        const cacheKey = `${image.slot}:${query}`;
-        if (!cache.has(cacheKey)) {
-          cache.set(cacheKey, await search(query, spec.orientation, 8, image.slot));
-        }
-        const results = cache.get(cacheKey);
+        // A portrait query can run dry once the ledger holds enough faces — all
+        // 30 results already used elsewhere. That is a reason to ask the next
+        // query in the pool, not to give up, so portraits get one attempt per
+        // pool entry. Descriptive slots get a single attempt: their query is the
+        // alt text, and there is no second phrasing of it that stays honest.
+        const portrait = PORTRAIT_SLOTS.has(image.slot);
+        const attempts = portrait ? PORTRAIT_POOL.length : 1;
+        let photo;
+        let results = [];
 
-        const photo = results.find((p) => !taken.has(p.id)) ?? results[0];
+        for (let i = 0; i < attempts && !photo; i += 1) {
+          const cacheKey = `${image.slot}:${query}:${portrait ? spin : 0}`;
+          if (!cache.has(cacheKey)) {
+            cache.set(cacheKey, await search(query, spec.orientation, image.slot, spin));
+          }
+          results = cache.get(cacheKey);
+          photo = results.find((p) => !taken.has(p.id));
+          if (portrait) spin += 1;
+        }
+
         if (!photo) {
-          console.warn(`  ! ${image.src} — no results for "${query}", leaving the placeholder`);
+          const why = results.length > 0 ? "every result is already used elsewhere" : "no results";
+          console.warn(`  ! ${image.src} — ${why} for "${query}", leaving the placeholder`);
           continue;
         }
         taken.add(photo.id);
@@ -248,6 +347,7 @@ async function main() {
     } finally {
       // Written even when a search throws mid-site, so the files on disk and the
       // paths in the config never disagree and the run can be resumed.
+      await writeLedger(taken);
       if (credits.length > 0) {
         await writeFile(join(root, `sites/${id}.config.ts`), configSource, "utf8");
         await writeFile(
@@ -255,7 +355,7 @@ async function main() {
           `# Photo credits — ${config.business.name}\n\n` +
             `Sourced from Unsplash under the Unsplash License.\n` +
             `Delete this file once the client's own photography replaces these.\n\n` +
-            `${credits.join("\n")}\n`,
+            `${(await mergeCredits(id, credits)).join("\n")}\n`,
           "utf8",
         );
         console.log(`✓ ${id} — ${credits.length} photos, config paths rewritten\n`);

@@ -34,6 +34,7 @@ NEXT_PUBLIC_SITE=church   npm run dev
 | `npm run validate` | Schema, WCAG contrast and distinctiveness across **all** configs |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run placeholders` | Regenerate placeholder SVGs from every config's palette |
+| `npm run sheets` | Contact sheet per site for reviewing photos against their alt text |
 | `npm run check` | validate → typecheck → build |
 
 ---
@@ -65,6 +66,7 @@ sites/
   <id>.config.ts       one per client
 scripts/
   validate-sites.mjs   the check that covers every config at once
+  check-variants.mjs   every declared variant has a renderer
   gen-placeholders.mjs branded placeholder artwork
 public/<id>/           that site's images
 ```
@@ -86,8 +88,11 @@ rendering. `app/globals.css` maps them into Tailwind's namespace with
 `@theme inline`, so `bg-primary`, `rounded-brand` and `font-heading` retint per
 client with no rebuild of the CSS pipeline and no client JavaScript.
 
-`buttonStyle` and `cardStyle` are applied as `data-*` attributes on `<html>` and
-resolved by CSS. That is why no component takes a `branding` prop.
+The levers that are pure presentation — `buttonStyle`, `buttonHover`,
+`cardStyle`, `sectionDivider`, `sectionTint`, `surfaceTexture` — are applied as
+`data-*` attributes on `<html>` and resolved by CSS. That is why no component
+takes a `branding` prop, and why the section tint and dividers need no section
+index threaded through `SectionRenderer`: CSS counts `main`'s children itself.
 
 ### Feature flags
 
@@ -104,26 +109,80 @@ the same template recoloured.
 
 | Section | Variants |
 | --- | --- |
-| hero | `fullscreen-image` `split` `minimal-centered` `video` `angled` |
+| hero | `fullscreen-image` `split` `minimal-centered` `video` `angled` `split-offset` `typographic` `card-overlay` |
 | about | `side-by-side` `stacked` `stats-overlay` |
 | services | `grid` `alternating` `tabs` `list` |
 | highlights | `icon-grid` `numbered` |
-| gallery | `masonry` `grid` `filmstrip` |
-| stats | `bar` `cards` |
-| pricing | `cards` `table` `simple-list` |
-| testimonials | `carousel` `grid` `single-featured` |
+| gallery | `masonry` `grid` `filmstrip` `justified` |
+| stats | `bar` `cards` `divided` |
+| pricing | `cards` `table` `simple-list` `comparison-strip` |
+| testimonials | `carousel` `grid` `single-featured` `wall` |
 | team | `grid` `rows` |
-| faq | `single-column` `two-column` |
+| faq | `single-column` `two-column` `sidebar` |
 | timeline | `vertical` `horizontal` |
 | partners | `marquee` `grid` |
-| booking | `centered` `split` |
+| booking | `centered` `split` `steps` |
 | contact | `split-map` `centered` `full-form` |
-| cta | `banner` `split` |
+| cta | `banner` `split` `overlap` |
 | navbar | `solid` `transparent-overlay` `centered-logo` |
 | footer | `columns` `minimal` `cta-heavy` |
 
 `npm run validate` fails if two client sites share the same **hero + services**
-pair, because that combination is what determines a site's structural feel.
+pair, because that combination is what determines a site's structural feel. That
+is a hard ceiling of 8 × 4 = **32 client sites**, of which 17 are used.
+
+`npm run check-variants` catches the one failure the other checks cannot see: a
+variant declared in `VARIANTS` with no `case` in its component. Typecheck,
+validate and the build all pass in that state — the site just quietly renders
+the default layout instead.
+
+### Branding levers
+
+Everything below is a `branding.*` enum. None of them is a component prop: they
+land as CSS custom properties or `data-*` attributes on `<html>` and the cascade
+does the rest, so adding one is a schema entry, a theme entry and a CSS block.
+Every default is what the engine shipped with, so a config that sets none of
+them looks exactly as it did.
+
+| Lever | Values (first is the default) |
+| --- | --- |
+| `borderRadius` | `none` `sm` `md`* `lg` `xl` `full` |
+| `buttonStyle` | `solid` `outline` `pill` `underline` `ghost` `soft` `gradient` `raised` |
+| `buttonHover` | `fade` `lift` `press` `glow` |
+| `cardStyle` | `flat` `bordered`* `elevated` `glass` |
+| `shadowStyle` | `none` `soft`* `hard` |
+| `borderWeight` | `hairline` `medium` `bold` |
+| `sectionDivider` | `none` `rule` `angled` `curve` |
+| `sectionTint` | `flat` `alternating` |
+| `spacingScale` | `compact` `normal`* `spacious` |
+| `animationStyle` | `none` `subtle`* `lively` |
+| `revealMotion` | `slide-up` `fade` `slide-in` `scale` `blur` |
+| `staggerChildren` | `false` `true` |
+| `surfaceTexture` | `none` `noise` `grid` `dots` `wash` |
+| `headingTransform` | `none` `uppercase` |
+
+\* marks a default that is not the first value.
+
+Three of these are worth knowing the details of:
+
+- **`sectionDivider: "angled"` and `"curve"`** only read against a neighbouring
+  section of a different colour, so pair them with `sectionTint: "alternating"`.
+- **`animationStyle` and `revealMotion` are two halves of one thing** —
+  `animationStyle` sets how far and how long, `revealMotion` sets what kind of
+  move. `animationStyle: "none"` disables the reveal regardless of the other.
+- **`staggerChildren`** is scroll-driven CSS (`animation-timeline: view()`), not
+  JavaScript. Where the browser lacks it, nothing applies and the grid items are
+  simply visible — the only acceptable failure mode for client content.
+
+`revealMotion: "blur"` is the one value with a running cost: it repaints the
+whole section each frame where the other four stay on the compositor. The radius
+is capped low for that reason. Prefer `fade` or `scale` on image-heavy sites.
+
+Anything added to `globals.css` that competes with a Tailwind utility must go in
+`@layer components`, and must not rely on a property a utility also sets —
+`section-y` writes `padding-block` from `@layer utilities`, which beats a
+components-layer `padding-top` on layer order no matter how specific it is. The
+`angled` divider compensates with a negative margin for exactly this reason.
 
 ---
 
@@ -166,9 +225,43 @@ Photos are downloaded rather than hotlinked. Hotlinking would put a third-party
 CDN on the critical path of a paying client's site and make builds depend on the
 network — the same reason placeholders are generated locally.
 
-**Rate limit:** an unreviewed Unsplash app gets 50 requests/hour. The script issues
-one search per image *slot* rather than per image, so a site costs roughly 15–20
-requests. Two or three sites per hour is the ceiling. Name the sites you want:
+#### Then look at what you got — this step is not optional
+
+```bash
+npm run sheets -- gym          # or no arguments for every site
+```
+
+That tiles the site's photos into one grid in `.sheets/` and prints each cell's
+alt text beside it. **Unsplash relevance is loose enough that roughly two in five
+photos come back wrong the first time**, and wrong here is not subtle: a
+smokehouse hero reading "brisket resting on the pass" returned a *mountain pass*;
+a construction gallery reading "a new four-bedroom home" returned a *four-poster
+bed*; a partner named Kobus van Wyk returned a *white delivery van*.
+
+Nothing in the pipeline can catch that — the script cannot see its own images.
+One grid per site turns the check into a minute's work, so do it every time.
+
+#### Writing alt text that finds a photo
+
+The same sentence is the accessibility promise *and* the search query, which
+means alt text has to describe **a photograph**, not a place, a person or a
+category. `"A sectional title unit sold in Ballito"` is a legal category and
+finds nothing; `"A modern apartment block"` finds the picture. When a search
+misses twice, shorten the alt rather than elaborating it.
+
+When the photo is close but the alt over-promises — one massage table where the
+alt says two — change the alt, not the photo. It costs no API calls and the alt
+is what a screen reader will read out.
+
+Team and testimonial slots never search their alt text at all: a name cannot
+describe a photograph. They draw from a rotating pool of portrait queries, and
+`scripts/.photo-ledger.json` records every photo ever used so no face appears on
+two client sites. Delete that file to allow reuse.
+
+**Rate limit:** an unreviewed Unsplash app gets 50 requests/hour — one search plus
+one download-tracking call per image, so budget **two requests per image** and
+about 25 images an hour. The run is resumable: fetched images become `.jpg` and
+are skipped next time, so on a 403 just wait and repeat the same command.
 
 ```bash
 UNSPLASH_ACCESS_KEY=xxx npm run photos -- gym barber
@@ -224,15 +317,31 @@ emit fourteen `<link rel=preload>` tags on a page that uses two. If heading text
 visibly swaps in on LCP for a particular client, add one manual preload for that
 family in `app/layout.tsx`.
 
-## Adding a section, or a variant
+## Adding a section, a variant, or a branding lever
 
 **A new variant** of an existing section:
 
-1. Add the variant name to that section's array in `VARIANTS` (`lib/schema.ts`).
+1. Append the variant name to that section's array in `VARIANTS` (`lib/schema.ts`).
 2. Add a sibling function in the section's file and a `case` in its switch.
+3. `npm run check-variants` — this is what fails if you do 1 without 2.
 
 That is the whole change. Existing configs keep working — the first entry in each
-`VARIANTS` array is the default.
+`VARIANTS` array is the default, which is also why new names go on the **end**:
+prepend one and every config that omits `variant` silently changes layout.
+
+**A new branding lever**:
+
+1. Add the enum to `brandingSchema` in `lib/schema.ts`, defaulting to whatever
+   the engine does today.
+2. Emit it in `lib/theme.ts` — a CSS custom property in `themeStyle()` if it is a
+   value, a `data-*` attribute in `themeAttributes()` if it selects a treatment.
+3. Add the CSS in `app/globals.css`. Anything that competes with a Tailwind
+   utility belongs in `@layer components` so the utility keeps winning.
+
+No component changes, and no site changes. If a lever cannot be expressed this
+way it usually means a value is hard-coded in a component that should be reading
+a custom property — `.field` was moved out of `EnquiryForm.tsx` for exactly that
+reason, so `borderWeight` could reach form inputs.
 
 **A new section**:
 
@@ -298,6 +407,11 @@ Enforced automatically by `npm run validate` across every config:
   not render, an image outside the site's own `/public` folder.
 - **Distinctiveness** — no two client sites share a hero + services pair.
 
+And by `npm run check-variants`:
+
+- **Every declared variant has a renderer.** A name in `VARIANTS` with no `case`
+  passes typecheck, validate and the build, and ships the wrong layout.
+
 Built in, not checked:
 
 - Semantic HTML, one `<h1>` per page, `aria-labelledby` on every section.
@@ -331,7 +445,7 @@ quoting numbers to a client.
 
 ## Demo sites
 
-Seventeen client sites, all rendered by the same code. Every one has a distinct
+Eighteen client sites, all rendered by the same code. Every one has a distinct
 hero + services pair, which `npm run validate` enforces.
 
 **Flagships**
@@ -354,6 +468,7 @@ hero + services pair, which `npm run validate` enforces.
 | `plumber` | Cape Flow Plumbing, Goodwood | `minimal-centered` + `list` |
 | `guesthouse` | Aloe Ridge, Hermanus | `fullscreen-image` + `alternating` |
 | `dentist` | Rivonia Dental Studio, Sandton | `split` + `tabs` |
+| `doctor` | Helderberg Family Practice, Somerset West | `card-overlay` + `grid` |
 | `estate` | Meridian Property Group, Umhlanga | `video` + `alternating` |
 | `cleaning` | Sparkle & Shine, Randburg | `minimal-centered` + `grid` |
 | `security` | Sentinel Response, Centurion | `angled` + `grid` |
@@ -368,6 +483,9 @@ every flag on, so one build exercises the whole component library.
 falls back to the poster image. Drop a `/church/welcome.mp4` in and set the field
 to activate it.
 
-`sites/church.config.ts` sets `hero.variant: "video"` without a `videoUrl`, so it
-falls back to the poster image. Drop a `/church/welcome.mp4` in and set the field
-to activate it.
+`sites/doctor.config.ts` is the one config with `features.testimonials` off for a
+regulatory reason rather than an editorial one: the HPCSA's rules on advertising
+do not permit a registered practitioner to publish patient testimonials. It is
+also the worked example of the newer branding levers — `soft` buttons, `lift`
+hover, `curve` dividers over `alternating` tint, `fade` reveal and a `wash`
+texture.

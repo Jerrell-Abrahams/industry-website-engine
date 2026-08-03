@@ -9,9 +9,11 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "validate": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate-sites.mjs",
+    "check-variants": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-variants.mjs",
     "placeholders": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-placeholders.mjs",
     "photos": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/fetch-photos.mjs",
-    "check": "npm run validate && npm run typecheck && npm run build"
+    "check": "npm run validate && npm run check-variants && npm run typecheck && npm run build",
+    "sheets": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/contact-sheet.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.28.0",
