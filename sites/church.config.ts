@@ -367,10 +367,10 @@ export const churchConfig: SiteConfigInput = {
     images: [
       { src: "/church/gallery-1.jpg", alt: "The courtyard between Sunday services" },
       { src: "/church/gallery-2.jpg", alt: "Volunteers serving at the Thursday table" },
-      { src: "/church/gallery-3.jpg", alt: "Hope Kids in the hall on a Sunday morning" },
-      { src: "/church/gallery-4.jpg", alt: "The band leading at the second service" },
+      { src: "/church/gallery-3.jpg", alt: "Children playing indoors at a kids' club" },
+      { src: "/church/gallery-4.jpg", alt: "A worship band playing on stage" },
       { src: "/church/gallery-5.jpg", alt: "A small group meeting in someone's lounge" },
-      { src: "/church/gallery-6.jpg", alt: "Youth night in the hall on a Friday evening" },
+      { src: "/church/gallery-6.jpg", alt: "Young people gathered for a church youth night" },
     ],
   },
 

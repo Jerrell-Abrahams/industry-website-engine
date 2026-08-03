@@ -126,7 +126,7 @@ export const gymConfig: SiteConfigInput = {
     headline: "Get strong on purpose",
     subheadline:
       "A coached barbell gym, not a circuit of machines. Everyone gets a written programme and someone watching their technique from the first session.",
-    image: { src: "/gym/hero.jpg", alt: "A lifter under a loaded barbell in the squat rack" },
+    image: { src: "/gym/hero.jpg", alt: "A lifter pulling a loaded deadlift" },
     primaryCta: { label: "Book a free trial", href: "#contact" },
     secondaryCta: { label: "See membership", href: "#pricing" },
     highlights: ["Open from 05:00", "No contracts", "Coached, not supervised"],
@@ -153,7 +153,7 @@ export const gymConfig: SiteConfigInput = {
         description:
           "Six weeks, twice a week, in groups of four. You learn to squat, press, deadlift and bench properly before you load anything heavy. This is where about eighty percent of our members start.",
         icon: "Dumbbell",
-        image: { src: "/gym/service-1.jpg", alt: "A coach teaching the squat to a small group" },
+        image: { src: "/gym/service-1.jpg", alt: "A coach teaching barbell technique" },
         price: "R2 400 for the block",
         points: [
           "Groups of four, never more",
@@ -167,7 +167,7 @@ export const gymConfig: SiteConfigInput = {
         description:
           "Full access to the floor with a programme written for you and reviewed every eight weeks. A coach is on the floor every hour we are open, and you can grab them.",
         icon: "Activity",
-        image: { src: "/gym/service-2.jpg", alt: "The main training floor with racks in use" },
+        image: { src: "/gym/service-2.jpg", alt: "The weights floor with squat racks" },
         price: "R750 per month",
         points: [
           "Programme reviewed every 8 weeks",
@@ -195,7 +195,7 @@ export const gymConfig: SiteConfigInput = {
         description:
           "Private sessions for people coming back from injury, training around a specific limitation, or who simply want a coach on every session.",
         icon: "UserCheck",
-        image: { src: "/gym/service-4.jpg", alt: "A coach working one-on-one with a member" },
+        image: { src: "/gym/service-4.jpg", alt: "A personal training session in the gym" },
         price: "R420 per session",
         points: [
           "45 minutes, booked directly with the coach",
@@ -367,6 +367,6 @@ export const gymConfig: SiteConfigInput = {
     body: "An hour with a coach, no sales pitch at the end. Come and see whether the place suits you.",
     primaryCta: { label: "Book a free trial", href: "#contact" },
     secondaryCta: { label: "021 948 7730", href: "tel:0219487730" },
-    image: { src: "/gym/cta.jpg", alt: "The competition platform at Ironworks Strength" },
+    image: { src: "/gym/cta.jpg", alt: "A loaded barbell on the lifting platform" },
   },
 };

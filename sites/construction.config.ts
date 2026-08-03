@@ -126,7 +126,7 @@ export const constructionConfig: SiteConfigInput = {
     headline: "The price on the contract is the price on the invoice",
     subheadline:
       "Fixed-price building contracts with a written programme and weekly photographic progress reports. Variations are quoted and signed before the work happens, never billed afterwards.",
-    image: { src: "/construction/hero.svg", alt: "A Terra Build residential project under construction" },
+    image: { src: "/construction/hero.jpg", alt: "A Terra Build residential project under construction" },
     primaryCta: { label: "Request a quote", href: "#contact" },
     secondaryCta: { label: "See projects", href: "#gallery" },
     highlights: ["NHBRC registered", "Fixed-price contracts", "Weekly progress reports"],
@@ -154,7 +154,7 @@ export const constructionConfig: SiteConfigInput = {
         description:
           "From your architect's drawings or ours, on your plot, from foundation to occupation certificate. We handle council submission, NHBRC enrolment and every trade on site.",
         icon: "Home",
-        image: { src: "/construction/service-1.svg", alt: "A new home nearing completion" },
+        image: { src: "/construction/service-1.jpg", alt: "A new home nearing completion" },
         price: "From R14 500 per m²",
         points: [
           "Council submission and approvals",
@@ -168,7 +168,7 @@ export const constructionConfig: SiteConfigInput = {
         description:
           "Additional bedrooms, a second storey, or opening up the back of the house. The hardest part is living in the property while we build, so we plan the sequence around that first.",
         icon: "Blocks",
-        image: { src: "/construction/service-2.svg", alt: "A double-storey extension under construction" },
+        image: { src: "/construction/service-2.jpg", alt: "A double-storey extension under construction" },
         price: "From R12 800 per m²",
         points: [
           "Plans drawn and submitted",
@@ -182,7 +182,7 @@ export const constructionConfig: SiteConfigInput = {
         description:
           "Kitchens, bathrooms and full interior refits. We open up and inspect before quoting the finish, so the wiring and plumbing you cannot see get priced honestly.",
         icon: "Hammer",
-        image: { src: "/construction/service-3.svg", alt: "A kitchen renovation in progress" },
+        image: { src: "/construction/service-3.jpg", alt: "A kitchen renovation in progress" },
         price: "Quoted per project",
         points: [
           "Strip-out and inspection before final quote",
@@ -195,7 +195,7 @@ export const constructionConfig: SiteConfigInput = {
         description:
           "Granny flats, garden cottages and garage conversions — usually the best return per rand of any residential work in Gqeberha at the moment.",
         icon: "Warehouse",
-        image: { src: "/construction/service-4.svg", alt: "A completed garden cottage" },
+        image: { src: "/construction/service-4.jpg", alt: "A completed garden cottage" },
         price: "From R11 500 per m²",
         points: ["Second-dwelling approvals handled", "Separate metering where required", "8 to 14 weeks typical"],
       },
@@ -204,7 +204,7 @@ export const constructionConfig: SiteConfigInput = {
         description:
           "Cracking, subsidence, damp and roof failure. Investigated with a structural engineer before anything is quoted, because guessing at a foundation problem is expensive.",
         icon: "Wrench",
-        image: { src: "/construction/service-5.svg", alt: "Structural repair work to a foundation" },
+        image: { src: "/construction/service-5.jpg", alt: "Structural repair work to a foundation" },
         price: "Investigation from R6 500",
         points: ["Engineer's report", "Insurance-ready documentation", "Underpinning and crack stitching"],
       },
@@ -251,12 +251,12 @@ export const constructionConfig: SiteConfigInput = {
     heading: "Recently completed",
     intro: "A selection from the last two years across Gqeberha and the surrounding areas.",
     images: [
-      { src: "/construction/gallery-1.svg", alt: "A new four-bedroom home in Lorraine" },
-      { src: "/construction/gallery-2.svg", alt: "A double-storey extension in Mill Park" },
-      { src: "/construction/gallery-3.svg", alt: "A kitchen renovation in Newton Park" },
-      { src: "/construction/gallery-4.svg", alt: "A garden cottage in Walmer" },
-      { src: "/construction/gallery-5.svg", alt: "A open-plan living conversion in Summerstrand" },
-      { src: "/construction/gallery-6.svg", alt: "A completed new build in Framesby" },
+      { src: "/construction/gallery-1.jpg", alt: "A large family house, newly completed" },
+      { src: "/construction/gallery-2.jpg", alt: "A double-storey extension in Mill Park" },
+      { src: "/construction/gallery-3.jpg", alt: "A kitchen renovation in Newton Park" },
+      { src: "/construction/gallery-4.jpg", alt: "A garden cottage in Walmer" },
+      { src: "/construction/gallery-5.jpg", alt: "An open-plan living room after renovation" },
+      { src: "/construction/gallery-6.jpg", alt: "A newly built house exterior" },
     ],
   },
 
@@ -396,6 +396,6 @@ export const constructionConfig: SiteConfigInput = {
       "The site visit and budget band cost nothing. It is the cheapest way to find out whether what you want and what you can spend are the same project.",
     primaryCta: { label: "Request a site visit", href: "#contact" },
     secondaryCta: { label: "041 373 2280", href: "tel:0413732280" },
-    image: { src: "/construction/cta.svg", alt: "A completed Terra Build home at handover" },
+    image: { src: "/construction/cta.jpg", alt: "A completed Terra Build home at handover" },
   },
 };

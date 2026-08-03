@@ -272,7 +272,7 @@ export const barberConfig: SiteConfigInput = {
       { src: "/barber/gallery-1.jpg", alt: "A high skin fade with a sharp line-up" },
       { src: "/barber/gallery-2.jpg", alt: "A textured crop cut finished with matte clay" },
       { src: "/barber/gallery-3.jpg", alt: "A full beard shaped and lined with a straight razor" },
-      { src: "/barber/gallery-4.jpg", alt: "The shop floor with all four chairs busy" },
+      { src: "/barber/gallery-4.jpg", alt: "A busy barbershop floor with every chair in use" },
       { src: "/barber/gallery-5.jpg", alt: "A hot towel being applied before a shave" },
       { src: "/barber/gallery-6.jpg", alt: "A low taper on short curly hair" },
     ],

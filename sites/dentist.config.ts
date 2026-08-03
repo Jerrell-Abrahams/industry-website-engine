@@ -125,7 +125,7 @@ export const dentistConfig: SiteConfigInput = {
     headline: "You can tell us you're nervous",
     subheadline:
       "About a third of our patients say they have avoided a dentist for years. We keep longer first appointments precisely for that, and nothing happens in a session you have not agreed to.",
-    image: { src: "/dentist/hero.svg", alt: "A treatment room at Rivonia Dental Studio" },
+    image: { src: "/dentist/hero.jpg", alt: "A dental chair in the surgery" },
     primaryCta: { label: "Book an appointment", href: "#booking" },
     secondaryCta: { label: "See treatments", href: "#services" },
     highlights: ["Emergency slots daily", "Sedation available", "All medical aids"],
@@ -175,7 +175,7 @@ export const dentistConfig: SiteConfigInput = {
         description:
           "A six-monthly examination, scale and polish, and digital x-rays where they are needed rather than by default. This is the appointment that keeps everything else cheap.",
         icon: "Stethoscope",
-        image: { src: "/dentist/service-1.svg", alt: "A routine dental examination" },
+        image: { src: "/dentist/service-1.jpg", alt: "A routine dental examination" },
         points: [
           "45-minute first visit",
           "Scale and polish with the oral hygienist",
@@ -188,7 +188,7 @@ export const dentistConfig: SiteConfigInput = {
         description:
           "Tooth-coloured composite fillings, inlays and crowns. We keep as much of the original tooth as we can, and we will tell you when a filling can safely be watched rather than replaced.",
         icon: "CircleDot",
-        image: { src: "/dentist/service-2.svg", alt: "Composite filling materials" },
+        image: { src: "/dentist/service-2.jpg", alt: "Composite filling materials" },
         points: ["Tooth-coloured composite", "Crowns and inlays", "Same-day temporary crowns", "Amalgam replacement"],
       },
       {
@@ -196,7 +196,7 @@ export const dentistConfig: SiteConfigInput = {
         description:
           "Usually over two visits, under local anaesthetic, with rotary instrumentation. The reputation is worse than the reality — most patients describe it as a long filling.",
         icon: "Activity",
-        image: { src: "/dentist/service-3.svg", alt: "Root canal instruments laid out" },
+        image: { src: "/dentist/service-3.jpg", alt: "Root canal instruments laid out" },
         points: ["Two visits in most cases", "Referral to a specialist when needed", "Sedation available"],
       },
       {
@@ -204,7 +204,7 @@ export const dentistConfig: SiteConfigInput = {
         description:
           "Whitening, veneers and bonding. We will show you a mock-up before committing to anything irreversible, and we will say so if we think you do not need it.",
         icon: "Sparkles",
-        image: { src: "/dentist/service-4.svg", alt: "A shade guide for tooth whitening" },
+        image: { src: "/dentist/service-4.jpg", alt: "A close-up of a smile after whitening" },
         points: ["Home and in-chair whitening", "Porcelain and composite veneers", "Mock-up before treatment"],
       },
       {
@@ -212,7 +212,7 @@ export const dentistConfig: SiteConfigInput = {
         description:
           "Pain, a knocked-out tooth, a lost crown or a broken denture. We hold slots open every working day and see registered patients the same day.",
         icon: "Siren",
-        image: { src: "/dentist/service-5.svg", alt: "The emergency treatment room" },
+        image: { src: "/dentist/service-5.jpg", alt: "A dentist wearing a mask and gloves" },
         points: ["Same-day for registered patients", "Saturday mornings 08:00 – 12:00", "Phone reception directly"],
       },
     ],
@@ -228,28 +228,28 @@ export const dentistConfig: SiteConfigInput = {
         name: "Dr Nadia Haffejee",
         role: "Principal dentist",
         bio: "BDS (Wits), practising since 2009. Special interest in treating anxious and phobic patients.",
-        image: { src: "/dentist/team-1.svg", alt: "Dr Nadia Haffejee" },
+        image: { src: "/dentist/team-1.jpg", alt: "Dr Nadia Haffejee" },
         socials: [],
       },
       {
         name: "Dr Thabo Mahlaba",
         role: "Dentist",
         bio: "BDS (UWC), practising since 2014. Restorative and cosmetic work, and the practice's implant referrals.",
-        image: { src: "/dentist/team-2.svg", alt: "Dr Thabo Mahlaba" },
+        image: { src: "/dentist/team-2.jpg", alt: "Dr Thabo Mahlaba" },
         socials: [],
       },
       {
         name: "Dr Ilse Fourie",
         role: "Dentist",
         bio: "BChD (Pretoria), practising since 2018. Sees most of our paediatric patients and runs the Saturday emergency clinic.",
-        image: { src: "/dentist/team-3.svg", alt: "Dr Ilse Fourie" },
+        image: { src: "/dentist/team-3.jpg", alt: "Dr Ilse Fourie" },
         socials: [],
       },
       {
         name: "Bongi Radebe",
         role: "Oral hygienist",
         bio: "Registered oral hygienist since 2012. Handles scaling, polishing and gum-health programmes.",
-        image: { src: "/dentist/team-4.svg", alt: "Bongi Radebe, oral hygienist" },
+        image: { src: "/dentist/team-4.jpg", alt: "Bongi Radebe, oral hygienist" },
         socials: [],
       },
     ],

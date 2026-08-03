@@ -149,7 +149,7 @@ export const restaurantConfig: SiteConfigInput = {
       "We light the pit at four in the morning so the brisket is ready by supper. No shortcuts, no gas, no apologies for selling out early.",
     image: {
       src: "/restaurant/hero.jpg",
-      alt: "Brisket resting on the pass at The Smoke House",
+      alt: "A whole smoked brisket resting before it is sliced",
     },
     primaryCta: { label: "Book a table", href: "#booking" },
     secondaryCta: { label: "See the menu", href: "#services" },
@@ -168,7 +168,7 @@ export const restaurantConfig: SiteConfigInput = {
     ],
     image: {
       src: "/restaurant/about.jpg",
-      alt: "Sipho tending the offset smoker in the yard behind the restaurant",
+      alt: "Tending the fire in the offset smoker",
     },
     stats: [
       { value: "16hr", label: "Longest smoke" },
@@ -237,10 +237,10 @@ export const restaurantConfig: SiteConfigInput = {
     heading: "Woodstock, most evenings",
     images: [
       { src: "/restaurant/gallery-1.jpg", alt: "Brisket being sliced against the grain on the pass" },
-      { src: "/restaurant/gallery-2.jpg", alt: "The offset smoker with its firebox door open" },
+      { src: "/restaurant/gallery-2.jpg", alt: "Meat cooking over the coals" },
       { src: "/restaurant/gallery-3.jpg", alt: "A full rack of ribs coming off the grate" },
-      { src: "/restaurant/gallery-4.jpg", alt: "The dining room on a busy Friday evening" },
-      { src: "/restaurant/gallery-5.jpg", alt: "Rooikrans logs stacked against the yard wall" },
+      { src: "/restaurant/gallery-4.jpg", alt: "The dining room in the evening" },
+      { src: "/restaurant/gallery-5.jpg", alt: "A stack of firewood" },
       { src: "/restaurant/gallery-6.jpg", alt: "Burnt ends being tossed in sauce" },
     ],
   },
@@ -331,7 +331,7 @@ export const restaurantConfig: SiteConfigInput = {
       "Off-site catering",
     ],
     askPreferredTime: true,
-    image: { src: "/restaurant/booking.jpg", alt: "A laid table in the dining room before service" },
+    image: { src: "/restaurant/booking.jpg", alt: "A restaurant table set before service" },
   },
 
   contact: {

@@ -505,6 +505,6 @@ export const turboConfig: SiteConfigInput = {
       "Drop the unit off, or send us a photo and the part number. You get the failure cause and the photographs first, and the price after — whether the work ends up here or not.",
     primaryCta: { label: "WhatsApp the bench", href: "https://wa.me/27824116140" },
     secondaryCta: { label: "011 824 6140", href: "tel:0118246140" },
-    image: { src: "/turbo/cta.svg", alt: "The workshop counter at Redline Turbo Engineering in Wadeville" },
+    image: { src: "/turbo/cta.jpg", alt: "An engine bay opened up on the workshop floor" },
   },
 };

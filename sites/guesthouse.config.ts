@@ -125,7 +125,7 @@ export const guesthouseConfig: SiteConfigInput = {
     headline: "Whales from the breakfast table",
     subheadline:
       "Five en-suite rooms on Rotary Way, high enough to see the whole of Walker Bay and close enough to walk down to the cliff path before breakfast.",
-    image: { src: "/guesthouse/hero.svg", alt: "The view over Walker Bay from the terrace at Aloe Ridge" },
+    image: { src: "/guesthouse/hero.jpg", alt: "The view over Walker Bay from the terrace at Aloe Ridge" },
     primaryCta: { label: "Check availability", href: "#booking" },
     secondaryCta: { label: "See the rooms", href: "#services" },
     highlights: ["Five rooms only", "Breakfast included", "Whales June to November"],
@@ -140,7 +140,7 @@ export const guesthouseConfig: SiteConfigInput = {
       "Marius and Elna Roux built Aloe Ridge in 2009 on the plot above their own house, with five rooms and no intention of adding a sixth. They still cook breakfast themselves and still know which room you asked for last time.",
       "Everything faces the bay. The cliff path is a seven-minute walk downhill, the Old Harbour is fifteen, and in season you will hear the whales before you see them.",
     ],
-    image: { src: "/guesthouse/about.svg", alt: "The guest house and terrace seen from the garden" },
+    image: { src: "/guesthouse/about.jpg", alt: "The guest house and terrace seen from the garden" },
     stats: [
       { value: "5", label: "Rooms" },
       { value: "2009", label: "Built" },
@@ -160,7 +160,7 @@ export const guesthouseConfig: SiteConfigInput = {
         description:
           "The largest room, on the top floor with a private balcony running the width of the house. King bed, freestanding bath and the best view on the property.",
         icon: "BedDouble",
-        image: { src: "/guesthouse/service-1.svg", alt: "The Bay Suite with its private balcony" },
+        image: { src: "/guesthouse/service-1.jpg", alt: "Guest rooms with private balconies" },
         price: "From R2 950 per night",
         points: ["King bed", "Private balcony", "Freestanding bath", "Sleeps 2"],
       },
@@ -169,7 +169,7 @@ export const guesthouseConfig: SiteConfigInput = {
         description:
           "Queen rooms on the first floor sharing the upper terrace. Quieter than the suite and the ones most couples end up rebooking.",
         icon: "Bed",
-        image: { src: "/guesthouse/service-2.svg", alt: "One of the Ridge Rooms" },
+        image: { src: "/guesthouse/service-2.jpg", alt: "A double bedroom with garden views" },
         price: "From R2 150 per night",
         points: ["Queen bed", "Shared upper terrace", "Shower en-suite", "Sleeps 2"],
       },
@@ -178,7 +178,7 @@ export const guesthouseConfig: SiteConfigInput = {
         description:
           "Ground floor, opening onto the garden and the pool. Twin beds that can be made up as a king, which makes them the practical choice for friends travelling together.",
         icon: "Trees",
-        image: { src: "/guesthouse/service-3.svg", alt: "A Garden Room opening onto the lawn" },
+        image: { src: "/guesthouse/service-3.jpg", alt: "A Garden Room opening onto the lawn" },
         price: "From R1 850 per night",
         points: ["Twin or king", "Direct garden access", "Nearest the pool", "Sleeps 2"],
       },
@@ -187,7 +187,7 @@ export const guesthouseConfig: SiteConfigInput = {
         description:
           "All five rooms for families and small groups, with the dining room and terrace yours for the stay. Popular for milestone birthdays out of season.",
         icon: "Home",
-        image: { src: "/guesthouse/service-4.svg", alt: "The dining room set for a group" },
+        image: { src: "/guesthouse/service-4.jpg", alt: "The dining room set for a group" },
         price: "From R9 500 per night",
         points: ["Sleeps 10", "Dining room and terrace exclusive", "Minimum two nights"],
       },
@@ -199,12 +199,12 @@ export const guesthouseConfig: SiteConfigInput = {
     eyebrow: "The property",
     heading: "Around the house",
     images: [
-      { src: "/guesthouse/gallery-1.svg", alt: "The terrace looking out over Walker Bay" },
-      { src: "/guesthouse/gallery-2.svg", alt: "The Bay Suite at sunrise" },
-      { src: "/guesthouse/gallery-3.svg", alt: "Breakfast laid out in the dining room" },
-      { src: "/guesthouse/gallery-4.svg", alt: "The pool and garden" },
-      { src: "/guesthouse/gallery-5.svg", alt: "The cliff path below the house" },
-      { src: "/guesthouse/gallery-6.svg", alt: "A Garden Room made up with twin beds" },
+      { src: "/guesthouse/gallery-1.jpg", alt: "The terrace looking out over Walker Bay" },
+      { src: "/guesthouse/gallery-2.jpg", alt: "A guest bedroom with a sea view" },
+      { src: "/guesthouse/gallery-3.jpg", alt: "Breakfast laid out in the dining room" },
+      { src: "/guesthouse/gallery-4.jpg", alt: "The pool and garden" },
+      { src: "/guesthouse/gallery-5.jpg", alt: "The cliff path below the house" },
+      { src: "/guesthouse/gallery-6.jpg", alt: "A guest bed made up with fresh linen" },
     ],
   },
 
@@ -337,7 +337,7 @@ export const guesthouseConfig: SiteConfigInput = {
       "Thank you — Marius or Elna will come back to you personally, usually within the day.",
     serviceOptions: ["Bay Suite", "Ridge Room", "Garden Room", "Whole house", "Not sure yet"],
     askPreferredTime: true,
-    image: { src: "/guesthouse/booking.svg", alt: "The terrace at sunset" },
+    image: { src: "/guesthouse/booking.jpg", alt: "The terrace at sunset" },
   },
 
   contact: {

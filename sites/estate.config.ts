@@ -129,7 +129,7 @@ export const estateConfig: SiteConfigInput = {
     headline: "Priced right, sold once",
     subheadline:
       "We will give you the valuation the market supports rather than the one that wins the mandate. Overpriced listings sit, go stale and sell for less — every time.",
-    image: { src: "/estate/hero.svg", alt: "A residential property overlooking the Umhlanga coastline" },
+    image: { src: "/estate/hero.jpg", alt: "The Umhlanga coastline from the air" },
     primaryCta: { label: "Request a valuation", href: "#contact" },
     secondaryCta: { label: "How we work", href: "#services" },
     highlights: ["Eleven agents", "Four coastal areas", "PPRA registered"],
@@ -146,7 +146,7 @@ export const estateConfig: SiteConfigInput = {
         description:
           "Full-service marketing including professional photography, floor plans, a drone set for coastal properties, and portal listings across Property24 and Private Property. Sole mandates only — a property advertised by four agencies at four prices tells a buyer that nobody knows what it is worth.",
         icon: "Home",
-        image: { src: "/estate/service-1.svg", alt: "A listing photographed for marketing" },
+        image: { src: "/estate/service-1.jpg", alt: "An agent at the window display of listings" },
         points: [
           "Professional photography and floor plans",
           "Sole mandate, 90 days",
@@ -159,7 +159,7 @@ export const estateConfig: SiteConfigInput = {
         description:
           "Tenant vetting through TPN, lease drafting, deposit handling in a trust account, and monthly management if you would rather not take the calls yourself.",
         icon: "KeyRound",
-        image: { src: "/estate/service-2.svg", alt: "Keys handed over at a rental property" },
+        image: { src: "/estate/service-2.jpg", alt: "Keys handed over at a rental property" },
         points: [
           "TPN credit and criminal vetting",
           "Deposits held in trust",
@@ -172,7 +172,7 @@ export const estateConfig: SiteConfigInput = {
         description:
           "A written comparative market analysis based on what has actually transferred nearby in the last six months, not on asking prices. Free, no obligation, and yours to keep whether you list with us or not.",
         icon: "TrendingUp",
-        image: { src: "/estate/service-3.svg", alt: "A comparative market analysis document" },
+        image: { src: "/estate/service-3.jpg", alt: "A comparative market analysis document" },
         points: [
           "Based on registered transfers",
           "Written and yours to keep",
@@ -185,7 +185,7 @@ export const estateConfig: SiteConfigInput = {
         description:
           "We take on two to three coastal developments a year, from Sibaya apartments to Zimbali freehold, and handle the sales process from launch through to transfer.",
         icon: "Building2",
-        image: { src: "/estate/service-4.svg", alt: "An architectural model of a coastal development" },
+        image: { src: "/estate/service-4.jpg", alt: "An apartment development under construction" },
         points: ["Sibaya, Ballito and Zimbali", "Launch through to transfer", "Investor and end-user buyers"],
       },
     ],
@@ -235,14 +235,14 @@ export const estateConfig: SiteConfigInput = {
     heading: "A sample of the last quarter",
     intro: "Properties transferred in Umhlanga, Ballito, Sibaya and Zimbali.",
     images: [
-      { src: "/estate/gallery-1.svg", alt: "A four-bedroom home sold in Umhlanga Rocks" },
-      { src: "/estate/gallery-2.svg", alt: "An apartment sold in Sibaya" },
-      { src: "/estate/gallery-3.svg", alt: "A freehold home sold in Zimbali" },
-      { src: "/estate/gallery-4.svg", alt: "A townhouse sold in Ballito" },
-      { src: "/estate/gallery-5.svg", alt: "A penthouse sold on the Umhlanga ridge" },
-      { src: "/estate/gallery-6.svg", alt: "A family home sold in Umhlanga Ridge" },
-      { src: "/estate/gallery-7.svg", alt: "A sectional title unit sold in Ballito" },
-      { src: "/estate/gallery-8.svg", alt: "A coastal plot sold in Sibaya" },
+      { src: "/estate/gallery-1.jpg", alt: "A luxury home exterior, sold in Umhlanga Rocks" },
+      { src: "/estate/gallery-2.jpg", alt: "An apartment sold in Sibaya" },
+      { src: "/estate/gallery-3.jpg", alt: "A SOLD board after a Zimbali sale" },
+      { src: "/estate/gallery-4.jpg", alt: "A townhouse sold in Ballito" },
+      { src: "/estate/gallery-5.jpg", alt: "A modern home sold on the Umhlanga ridge" },
+      { src: "/estate/gallery-6.jpg", alt: "Modern homes on the Umhlanga ridge" },
+      { src: "/estate/gallery-7.jpg", alt: "A modern apartment block, sold in Ballito" },
+      { src: "/estate/gallery-8.jpg", alt: "The Sibaya coastline from above, where we sell" },
     ],
   },
 
@@ -256,28 +256,28 @@ export const estateConfig: SiteConfigInput = {
         name: "Priya Reddy",
         role: "Principal · Umhlanga Rocks",
         bio: "PPRA registered since 2008. Founded Meridian in 2011 and still lists personally on the ridge.",
-        image: { src: "/estate/team-1.svg", alt: "Priya Reddy, principal" },
+        image: { src: "/estate/team-1.jpg", alt: "Priya Reddy, principal" },
         socials: [{ platform: "LinkedIn", href: "https://linkedin.com/company/meridian-property", icon: "Linkedin" }],
       },
       {
         name: "Craig Sutherland",
         role: "Sales · Ballito and Salt Rock",
         bio: "Fourteen years on the North Coast. Handles most of our freehold family-home listings.",
-        image: { src: "/estate/team-2.svg", alt: "Craig Sutherland, sales agent" },
+        image: { src: "/estate/team-2.jpg", alt: "Craig Sutherland, sales agent" },
         socials: [],
       },
       {
         name: "Nokuthula Zwane",
         role: "Sales · Sibaya and Umhlanga Ridge",
         bio: "Specialises in new developments and off-plan, from launch through to transfer.",
-        image: { src: "/estate/team-3.svg", alt: "Nokuthula Zwane, sales agent" },
+        image: { src: "/estate/team-3.jpg", alt: "Nokuthula Zwane, sales agent" },
         socials: [],
       },
       {
         name: "Anton Meintjies",
         role: "Rentals manager",
         bio: "Runs the letting book, tenant vetting and the managed-property portfolio.",
-        image: { src: "/estate/team-4.svg", alt: "Anton Meintjies, rentals manager" },
+        image: { src: "/estate/team-4.jpg", alt: "Anton Meintjies, rentals manager" },
         socials: [],
       },
     ],

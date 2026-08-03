@@ -188,7 +188,7 @@ export const attorneyConfig: SiteConfigInput = {
         description:
           "Advice to employers and senior employees on dismissals, restraints of trade, retrenchment processes and workplace investigations, including representation at the CCMA and Labour Court.",
         icon: "Users",
-        image: { src: "/attorney/service-2.jpg", alt: "A labour hearing being prepared" },
+        image: { src: "/attorney/service-2.jpg", alt: "A statue of the scales of justice" },
         points: [
           "Disciplinary and incapacity processes",
           "Section 189 retrenchment consultations",

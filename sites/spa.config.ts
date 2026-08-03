@@ -119,7 +119,7 @@ export const spaConfig: SiteConfigInput = {
     headline: "Put your phone in the drawer",
     subheadline:
       "Six treatment rooms above Chartwell Drive. No music you have to tolerate, no upselling at the end, and a therapist who asks about pressure before they start rather than after.",
-    image: { src: "/spa/hero.svg", alt: "A treatment room at Lotus & Stone" },
+    image: { src: "/spa/hero.jpg", alt: "Inside the spa at Lotus & Stone" },
     primaryCta: { label: "Book a treatment", href: "#booking" },
     secondaryCta: { label: "See treatments", href: "#services" },
     highlights: ["Six therapists", "Two couples' rooms", "Tuesday to Saturday"],
@@ -136,7 +136,7 @@ export const spaConfig: SiteConfigInput = {
         description:
           "Swedish, deep tissue, hot stone and pregnancy massage. Your therapist will ask about pressure, injuries and problem areas before starting, and check in once during the treatment rather than every five minutes.",
         icon: "Hand",
-        image: { src: "/spa/service-1.svg", alt: "A massage in progress" },
+        image: { src: "/spa/service-1.jpg", alt: "A massage in progress" },
         price: "R560 – R980",
         points: ["60 or 90 minutes", "Pregnancy massage from 14 weeks", "Hot stone available in all rooms"],
       },
@@ -145,7 +145,7 @@ export const spaConfig: SiteConfigInput = {
         description:
           "A consultation first, then a treatment chosen for your skin rather than off a menu. We use a South African-made professional range and will tell you honestly if a course is not going to help.",
         icon: "Sparkles",
-        image: { src: "/spa/service-2.svg", alt: "A facial treatment being prepared" },
+        image: { src: "/spa/service-2.jpg", alt: "A facial treatment being prepared" },
         price: "R620 – R1 150",
         points: ["Skin consultation included", "Suitable for sensitive and reactive skin", "No product upselling"],
       },
@@ -154,7 +154,7 @@ export const spaConfig: SiteConfigInput = {
         description:
           "Scrubs, wraps and a two-hour ritual that combines both with a massage. Popular before a wedding or after a long stretch of travelling.",
         icon: "Waves",
-        image: { src: "/spa/service-3.svg", alt: "Body treatment products laid out" },
+        image: { src: "/spa/service-3.jpg", alt: "Body treatment products laid out" },
         price: "R740 – R1 480",
         points: ["90 minutes to 2 hours", "Shower in every room"],
       },
@@ -163,7 +163,7 @@ export const spaConfig: SiteConfigInput = {
         description:
           "Two couples' rooms, and we close the whole spa for private groups of eight or more on a Sunday or Monday when we are otherwise shut.",
         icon: "Users",
-        image: { src: "/spa/service-4.svg", alt: "The couples' treatment room" },
+        image: { src: "/spa/service-4.jpg", alt: "A back massage in one of the couples' rooms" },
         price: "From R1 320 per pair",
         points: ["Two couples' rooms", "Private hire Sundays and Mondays", "Catering can be arranged"],
       },
@@ -221,12 +221,12 @@ export const spaConfig: SiteConfigInput = {
     eyebrow: "The spa",
     heading: "Inside Chartwell Centre",
     images: [
-      { src: "/spa/gallery-1.svg", alt: "The reception and waiting area" },
-      { src: "/spa/gallery-2.svg", alt: "A single treatment room set up for a massage" },
-      { src: "/spa/gallery-3.svg", alt: "The couples' room with two beds" },
-      { src: "/spa/gallery-4.svg", alt: "Towels and oils on the treatment trolley" },
-      { src: "/spa/gallery-5.svg", alt: "The relaxation area after treatment" },
-      { src: "/spa/gallery-6.svg", alt: "The product shelf at reception" },
+      { src: "/spa/gallery-1.jpg", alt: "The reception and waiting area" },
+      { src: "/spa/gallery-2.jpg", alt: "A single treatment room set up for a massage" },
+      { src: "/spa/gallery-3.jpg", alt: "A massage table in a warm treatment room" },
+      { src: "/spa/gallery-4.jpg", alt: "Towels and oils on the treatment trolley" },
+      { src: "/spa/gallery-5.jpg", alt: "The relaxation area after treatment" },
+      { src: "/spa/gallery-6.jpg", alt: "Skincare products on a shelf" },
     ],
   },
 
@@ -322,7 +322,7 @@ export const spaConfig: SiteConfigInput = {
       "Private group hire",
     ],
     askPreferredTime: true,
-    image: { src: "/spa/booking.svg", alt: "A treatment bed prepared with fresh towels" },
+    image: { src: "/spa/booking.jpg", alt: "A treatment bed prepared with fresh towels" },
   },
 
   contact: {

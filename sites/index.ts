@@ -10,6 +10,7 @@ import { cleaningConfig } from "./cleaning.config.ts";
 import { coffeeConfig } from "./coffee.config.ts";
 import { constructionConfig } from "./construction.config.ts";
 import { dentistConfig } from "./dentist.config.ts";
+import { doctorConfig } from "./doctor.config.ts";
 import { estateConfig } from "./estate.config.ts";
 import { funeralConfig } from "./funeral.config.ts";
 import { guesthouseConfig } from "./guesthouse.config.ts";
@@ -50,6 +51,7 @@ export const sites: Record<string, SiteConfigInput> = {
   plumber: plumberConfig,
   guesthouse: guesthouseConfig,
   dentist: dentistConfig,
+  doctor: doctorConfig,
   estate: estateConfig,
   cleaning: cleaningConfig,
   security: securityConfig,

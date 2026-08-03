@@ -124,7 +124,7 @@ export const coffeeConfig: SiteConfigInput = {
     headline: "Coffee worth getting up for",
     subheadline:
       "We roast in the back on Tuesdays and serve it out front the rest of the week. Bikes go on the rack, dogs get water, and nobody is rushed off a table.",
-    image: { src: "/coffee/hero.jpg", alt: "The espresso bar at Bean & Bicycle on a weekday morning" },
+    image: { src: "/coffee/hero.jpg", alt: "The espresso machine on the counter" },
     primaryCta: { label: "See the menu", href: "#services" },
     secondaryCta: { label: "Find us", href: "#contact" },
     highlights: ["Open from 06:30", "Roasted on site", "Bike rack out front"],
@@ -195,7 +195,7 @@ export const coffeeConfig: SiteConfigInput = {
       "Nadia Sithole bought a 5kg Probat in 2015 and put it in the back of what was then a bicycle repair shop. The bikes went, the name stayed, and the roaster has not moved since.",
       "We buy green from two importers who can tell us the farm, and we roast light enough that you can taste where it came from. Everything on the shelf was roasted within the last seven days, and the date is on the bag.",
     ],
-    image: { src: "/coffee/about.jpg", alt: "The Probat roaster in the back room" },
+    image: { src: "/coffee/about.jpg", alt: "Beans, grounds and a finished flat white" },
     stats: [
       { value: "2015", label: "Roasting since" },
       { value: "7 days", label: "Maximum bag age" },
@@ -209,12 +209,12 @@ export const coffeeConfig: SiteConfigInput = {
     eyebrow: "The shop",
     heading: "4th Avenue, most mornings",
     images: [
-      { src: "/coffee/gallery-1.jpg", alt: "A flat white on the pass" },
+      { src: "/coffee/gallery-1.jpg", alt: "A flat white coffee with latte art" },
       { src: "/coffee/gallery-2.jpg", alt: "Green beans going into the roaster" },
       { src: "/coffee/gallery-3.jpg", alt: "The pavement tables on a Saturday" },
       { src: "/coffee/gallery-4.jpg", alt: "Bags of beans on the retail shelf" },
       { src: "/coffee/gallery-5.jpg", alt: "Breakfast plated at the counter" },
-      { src: "/coffee/gallery-6.jpg", alt: "Bicycles on the rack outside" },
+      { src: "/coffee/gallery-6.jpg", alt: "A bicycle parked outside" },
     ],
   },
 

@@ -165,7 +165,7 @@ export const funeralConfig: SiteConfigInput = {
     subheadline:
       "Phone us whatever the time. We will come for your loved one, explain what happens next in plain language, and give you a written quote before anything is arranged. Nothing is decided faster than your family is ready to decide it.",
     image: {
-      src: "/funeral/hero.svg",
+      src: "/funeral/hero.jpg",
       alt: "Morning light through trees in a quiet memorial garden",
     },
     primaryCta: { label: "Call 011 938 4470", href: "tel:0119384470" },
@@ -220,8 +220,8 @@ export const funeralConfig: SiteConfigInput = {
           "The full arrangement: collection and care, coffin, the grave, hearse and family cars, the tent, chairs and sound at the house, programmes, and the catering if you want us to handle it.",
         icon: "Flower2",
         image: {
-          src: "/funeral/service-1.svg",
-          alt: "A hearse waiting at the gate before a morning service",
+          src: "/funeral/service-1.jpg",
+          alt: "A hearse parked outside",
         },
         price: "From R14 500",
         points: [
@@ -237,7 +237,7 @@ export const funeralConfig: SiteConfigInput = {
           "Usually the less costly choice, and often the practical one when family is spread across the country. We arrange the crematorium, the service if you want one, and return the ashes to you in person.",
         icon: "Flame",
         image: {
-          src: "/funeral/service-2.svg",
+          src: "/funeral/service-2.jpg",
           alt: "A quiet chapel interior arranged for a memorial service",
         },
         price: "From R9 800",
@@ -254,7 +254,7 @@ export const funeralConfig: SiteConfigInput = {
           "Taking your loved one home — to the Eastern Cape, KwaZulu-Natal, Limpopo, or across the border to Lesotho, Zimbabwe and Mozambique. We drive, we carry the permits, and we hand over to the family at the other end.",
         icon: "Route",
         image: {
-          src: "/funeral/service-3.svg",
+          src: "/funeral/service-3.jpg",
           alt: "A long road heading into hills at first light",
         },
         price: "From R6 500",
@@ -271,7 +271,7 @@ export const funeralConfig: SiteConfigInput = {
           "Registering the death, the BI-1663, the death certificate from Home Affairs, and lodging the funeral policy claim. This is included in every arrangement — we do not charge families to fill in forms.",
         icon: "ClipboardCheck",
         image: {
-          src: "/funeral/service-4.svg",
+          src: "/funeral/service-4.jpg",
           alt: "Documents and a pen on a desk in the arrangement room",
         },
         price: "Included",
@@ -288,7 +288,7 @@ export const funeralConfig: SiteConfigInput = {
           "A memorial service weeks or months later, and the tombstone unveiling when the family is ready. We keep your file so you do not have to explain everything again to somebody new.",
         icon: "Landmark",
         image: {
-          src: "/funeral/service-5.svg",
+          src: "/funeral/service-5.jpg",
           alt: "A headstone in morning light before an unveiling",
         },
         price: "From R4 200",
@@ -305,7 +305,7 @@ export const funeralConfig: SiteConfigInput = {
           "Some people would rather decide this themselves than leave it to their children. Come in, tell us what you want, and we will write it down and hold it on file at today's price.",
         icon: "CalendarCheck",
         image: {
-          src: "/funeral/service-6.svg",
+          src: "/funeral/service-6.jpg",
           alt: "Two chairs at a table in the arrangement room",
         },
         price: "No charge to plan",
@@ -545,7 +545,7 @@ export const funeralConfig: SiteConfigInput = {
     primaryCta: { label: "Call 011 938 4470", href: "tel:0119384470" },
     secondaryCta: { label: "WhatsApp us", href: "https://wa.me/27829384470" },
     image: {
-      src: "/funeral/cta.svg",
+      src: "/funeral/cta.jpg",
       alt: "The entrance to the Thembeka Funeral Directors office on Immink Drive",
     },
   },

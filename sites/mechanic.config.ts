@@ -201,7 +201,7 @@ export const mechanicConfig: SiteConfigInput = {
         description:
           "Clutch replacement, slave and master cylinders, and gearbox removal and refit. Manual transmissions in-house; automatic rebuilds go to a specialist we have used for fifteen years.",
         icon: "Cog",
-        image: { src: "/mechanic/service-3.jpg", alt: "A clutch assembly on the workbench" },
+        image: { src: "/mechanic/service-3.jpg", alt: "A clutch plate and pressure plate on the bench" },
         price: "From R6 800",
         points: [
           "Manual clutch kits, most makes",
