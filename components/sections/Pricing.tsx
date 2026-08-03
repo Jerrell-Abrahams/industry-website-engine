@@ -24,6 +24,8 @@ export function Pricing({ config }: Props) {
         <Table pricing={pricing} />
       ) : pricing.variant === "simple-list" ? (
         <SimpleList pricing={pricing} />
+      ) : pricing.variant === "comparison-strip" ? (
+        <ComparisonStrip pricing={pricing} />
       ) : (
         <Cards pricing={pricing} />
       )}
@@ -158,6 +160,53 @@ function Table({ pricing }: { pricing: PricingContent }) {
         </tbody>
       </table>
     </div>
+  );
+}
+
+/**
+ * One row per plan: name, inline feature list, price, CTA.
+ *
+ * Sits between `table` and `simple-list` — it still shows what each plan
+ * includes, but without the column-per-plan grid that forces horizontal
+ * scrolling on a phone, and without three tall cards competing for attention.
+ */
+function ComparisonStrip({ pricing }: { pricing: PricingContent }) {
+  return (
+    <ul className="mx-auto flex max-w-4xl flex-col overflow-hidden rounded-brand border border-line">
+      {pricing.plans.map((plan) => (
+        <li
+          key={plan.name}
+          className={cn(
+            "flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-line p-5 last:border-b-0 sm:p-6",
+            plan.featured && "bg-primary/5",
+          )}
+        >
+          <div className="min-w-40 grow">
+            <h3 className="text-lg font-bold">{plan.name}</h3>
+            {plan.description ? <p className="text-sm text-muted">{plan.description}</p> : null}
+          </div>
+
+          {plan.features.length > 0 ? (
+            <ul className="flex w-full flex-wrap gap-x-4 gap-y-1 text-sm text-muted lg:w-auto lg:max-w-sm">
+              {plan.features.map((f) => (
+                <li key={f} className="flex items-center gap-1.5">
+                  <Icon name="Check" size={15} className="shrink-0 text-primary" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          <Price plan={plan} />
+
+          {plan.cta ? (
+            <Button href={plan.cta.href} tone={plan.featured ? "primary" : "secondary"}>
+              {plan.cta.label}
+            </Button>
+          ) : null}
+        </li>
+      ))}
+    </ul>
   );
 }
 

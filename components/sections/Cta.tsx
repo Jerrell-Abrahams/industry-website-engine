@@ -7,7 +7,13 @@ export function Cta({ config }: Props) {
   const cta = config.cta;
   if (!cta) return null;
 
-  return cta.variant === "split" ? <Split cta={cta} /> : <Banner cta={cta} />;
+  return cta.variant === "split" ? (
+    <Split cta={cta} />
+  ) : cta.variant === "overlap" ? (
+    <Overlap cta={cta} />
+  ) : (
+    <Banner cta={cta} />
+  );
 }
 
 function Actions({ cta, onPrimary }: { cta: CtaContent; onPrimary: boolean }) {
@@ -45,6 +51,38 @@ function Banner({ cta }: { cta: CtaContent }) {
         </h2>
         {cta.body ? <p className="max-w-2xl text-lg opacity-90">{cta.body}</p> : null}
         <Actions cta={cta} onPrimary />
+      </div>
+    </Section>
+  );
+}
+
+/**
+ * Colour band with the image breaking out of it.
+ *
+ * Unlike `split`, where the image is a flush half of the panel, here it hangs
+ * over the band's top and bottom edges — so the section reads as two layers
+ * rather than one rectangle. Below `lg` the overlap collapses to the image
+ * sitting under the band, because a 32%-wide float is unreadable on a phone.
+ */
+function Overlap({ cta }: { cta: CtaContent }) {
+  return (
+    <Section id="cta" labelledBy="cta-heading">
+      <div className="relative">
+        <div className="rounded-brand bg-primary px-8 py-12 text-on-primary sm:px-12 lg:py-16 lg:pr-[40%]">
+          <div className="flex flex-col gap-5">
+            <h2 id="cta-heading" className="max-w-xl text-3xl font-bold sm:text-4xl">
+              {cta.heading}
+            </h2>
+            {cta.body ? <p className="max-w-lg text-lg opacity-90">{cta.body}</p> : null}
+            <Actions cta={cta} onPrimary />
+          </div>
+        </div>
+
+        {cta.image ? (
+          <div className="relative mx-auto -mt-10 aspect-4/3 w-[85%] overflow-hidden rounded-brand shadow-brand lg:absolute lg:top-1/2 lg:right-8 lg:mt-0 lg:aspect-square lg:w-[32%] lg:-translate-y-1/2">
+            <Picture image={cta.image} sizes="(max-width: 1024px) 85vw, 30vw" />
+          </div>
+        ) : null}
       </div>
     </Section>
   );

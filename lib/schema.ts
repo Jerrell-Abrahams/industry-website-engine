@@ -74,20 +74,29 @@ const fontKey = z.enum(FONT_KEYS);
  * ------------------------------------------------------------------ */
 
 export const VARIANTS = {
-  hero: ["fullscreen-image", "split", "minimal-centered", "video", "angled"],
+  hero: [
+    "fullscreen-image",
+    "split",
+    "minimal-centered",
+    "video",
+    "angled",
+    "split-offset",
+    "typographic",
+    "card-overlay",
+  ],
   about: ["side-by-side", "stacked", "stats-overlay"],
   services: ["grid", "alternating", "tabs", "list"],
   highlights: ["icon-grid", "numbered"],
-  gallery: ["masonry", "grid", "filmstrip"],
-  stats: ["bar", "cards"],
-  pricing: ["cards", "table", "simple-list"],
-  testimonials: ["carousel", "grid", "single-featured"],
+  gallery: ["masonry", "grid", "filmstrip", "justified"],
+  stats: ["bar", "cards", "divided"],
+  pricing: ["cards", "table", "simple-list", "comparison-strip"],
+  testimonials: ["carousel", "grid", "single-featured", "wall"],
   team: ["grid", "rows"],
-  faq: ["single-column", "two-column"],
+  faq: ["single-column", "two-column", "sidebar"],
   timeline: ["vertical", "horizontal"],
   partners: ["marquee", "grid"],
   contact: ["split-map", "centered", "full-form"],
-  cta: ["banner", "split"],
+  cta: ["banner", "split", "overlap"],
   booking: ["centered", "split", "steps"],
   navbar: ["solid", "transparent-overlay", "centered-logo"],
   footer: ["columns", "minimal", "cta-heavy"],
@@ -161,11 +170,43 @@ const brandingSchema = z.object({
   fontHeading: fontKey,
   fontBody: fontKey,
   borderRadius: z.enum(["none", "sm", "md", "lg", "xl", "full"]).default("md"),
-  buttonStyle: z.enum(["solid", "outline", "pill", "underline"]).default("solid"),
+  /**
+   * Shape of the primary button.
+   *
+   * `gradient` ramps primaryColor → secondaryColor and stops there on purpose:
+   * validate-sites.mjs checks `onPrimary` against `primaryColor` only, so a ramp
+   * ending on an arbitrary third colour would break contrast where nothing looks.
+   */
+  buttonStyle: z
+    .enum(["solid", "outline", "pill", "underline", "ghost", "soft", "gradient", "raised"])
+    .default("solid"),
+  /** How a button reacts to hover, independent of its shape. */
+  buttonHover: z.enum(["fade", "lift", "press", "glow"]).default("fade"),
   cardStyle: z.enum(["flat", "bordered", "elevated", "glass"]).default("bordered"),
   shadowStyle: z.enum(["none", "soft", "hard"]).default("soft"),
+  /**
+   * Border thickness on cards, outline buttons and form inputs. `hairline` is
+   * the 1px every site shipped with, so it is the default — which is why the
+   * middle value is named `medium` rather than `standard`.
+   */
+  borderWeight: z.enum(["hairline", "medium", "bold"]).default("hairline"),
+  /**
+   * Shape drawn between consecutive sections. `angled` and `curve` are only
+   * visible where neighbouring sections differ in colour, so they are meant to
+   * be paired with `sectionTint: "alternating"`.
+   */
+  sectionDivider: z.enum(["none", "rule", "angled", "curve"]).default("none"),
+  /** `alternating` tints every second section with neutral.surface. */
+  sectionTint: z.enum(["flat", "alternating"]).default("flat"),
   spacingScale: z.enum(["compact", "normal", "spacious"]).default("normal"),
+  /** Reveal distance and duration. `none` disables the scroll reveal entirely. */
   animationStyle: z.enum(["none", "subtle", "lively"]).default("subtle"),
+  /** Which motion the scroll reveal uses. animationStyle still sets its size. */
+  revealMotion: z.enum(["slide-up", "fade", "slide-in", "scale", "blur"]).default("slide-up"),
+  /** Grid items rise in sequence as their grid scrolls in. CSS-only, opt-in. */
+  staggerChildren: z.boolean().default(false),
+  /** Faint pattern behind the page. Kept low-contrast so body copy is unaffected. */
+  surfaceTexture: z.enum(["none", "noise", "grid", "dots", "wash"]).default("none"),
   /** Uppercase + tracked headings. Cheap, high-impact personality lever. */
   headingTransform: z.enum(["none", "uppercase"]).default("none"),
 });

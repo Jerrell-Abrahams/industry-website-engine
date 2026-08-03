@@ -40,6 +40,7 @@
   --brand-on-primary: #ffffff;
   --brand-radius: 0.5rem;
   --brand-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  --brand-border-width: 1px;
   --brand-section-y: 5.5rem;
   --brand-gap: 2rem;
   --brand-heading-transform: none;
@@ -122,6 +123,8 @@
       background-color 0.2s ease,
       color 0.2s ease,
       border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.15s ease,
       opacity 0.2s ease;
     text-align: center;
   }
@@ -138,7 +141,7 @@
   .btn-secondary {
     background-color: transparent;
     color: currentColor;
-    border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
+    border: var(--brand-border-width) solid color-mix(in srgb, currentColor 35%, transparent);
   }
   .btn-secondary:hover {
     border-color: currentColor;
@@ -173,10 +176,71 @@
     opacity: 1;
   }
 
+  /* Text-only until hovered. The quietest of the eight. */
+  [data-button-style="ghost"] .btn-primary {
+    background-color: transparent;
+    color: var(--brand-primary);
+    border-color: transparent;
+  }
+  [data-button-style="ghost"] .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--brand-primary) 10%, transparent);
+    opacity: 1;
+  }
+
+  /* Tinted fill: primary text on a wash of itself, so contrast stays high. */
+  [data-button-style="soft"] .btn-primary {
+    background-color: color-mix(in srgb, var(--brand-primary) 14%, transparent);
+    color: var(--brand-primary);
+    border-color: transparent;
+  }
+  [data-button-style="soft"] .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--brand-primary) 24%, transparent);
+    opacity: 1;
+  }
+
+  /* Ramps primary → secondary only — see the schema comment on buttonStyle. */
+  [data-button-style="gradient"] .btn-primary {
+    background-image: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+    border-color: transparent;
+  }
+
+  /* Sits on the page rather than in it. Uses --brand-shadow, so shadowStyle
+     "none" flattens it back to solid — intentional, the two levers compose.
+     Deliberately no :hover rule: one would outrank `.btn-primary:hover` and
+     silently override whatever buttonHover is set to. Hover belongs to that
+     lever alone, and `buttonHover: "press"` is the press-in this shape wants. */
+  [data-button-style="raised"] .btn-primary {
+    box-shadow: var(--brand-shadow);
+  }
+
+  /*
+   * Hover behaviour, independent of shape. Every one of these keeps the
+   * foreground/background pair the palette was validated on: they move, shade
+   * or halo the button rather than recolouring its text.
+   */
+  [data-button-hover="lift"] .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--brand-shadow);
+    opacity: 1;
+  }
+
+  [data-button-hover="press"] .btn:hover {
+    transform: translateY(2px);
+    opacity: 1;
+  }
+  [data-button-hover="press"] .btn:active {
+    transform: translateY(3px);
+  }
+
+  [data-button-hover="glow"] .btn:hover {
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-primary) 22%, transparent);
+    opacity: 1;
+  }
+
   .card {
     background-color: var(--brand-surface);
     border-radius: var(--brand-radius);
-    border: 1px solid transparent;
+    border: var(--brand-border-width) solid transparent;
   }
   [data-card-style="bordered"] .card {
     border-color: var(--brand-border);
@@ -188,6 +252,27 @@
     background-color: color-mix(in srgb, var(--brand-surface) 65%, transparent);
     border-color: var(--brand-border);
     backdrop-filter: blur(12px);
+  }
+
+  /*
+   * Form inputs. This lives here rather than as a Tailwind string in
+   * EnquiryForm.tsx so that borderWeight reaches inputs the same way it reaches
+   * cards and buttons — a utility class would hard-code the 1px.
+   */
+  .field {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    color: var(--brand-text);
+    background-color: var(--brand-bg);
+    border: var(--brand-border-width) solid var(--brand-border);
+    border-radius: var(--brand-radius);
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+  .field:focus {
+    border-color: var(--brand-primary);
   }
 }
 
@@ -247,4 +332,115 @@ details > summary {
 
 details > summary::-webkit-details-marker {
   display: none;
+}
+
+/*
+ * Page-level levers: section tint, section dividers, surface texture, stagger.
+ *
+ * These count `main`'s children rather than taking a section index as a prop.
+ * That matters because SectionRenderer wraps every section after the first in
+ * Reveal's <div> when animation is on and renders it bare when it is off — so
+ * `main > :nth-child(n)` is the one selector that addresses the right slot in
+ * both shapes, while `section + section` and `:nth-of-type` address neither.
+ *
+ * `@layer components` is load-bearing: a section that sets its own background
+ * (`bg-primary` on the CTA banner, `bg-surface` on testimonials) does it with a
+ * Tailwind utility, and utilities must keep winning over the tint.
+ */
+@layer components {
+  [data-section-tint="alternating"] main > :nth-child(even) {
+    background-color: var(--brand-surface);
+  }
+
+  [data-section-divider="rule"] main > * + * {
+    border-top: var(--brand-border-width) solid var(--brand-border);
+  }
+
+  /* The wedge exposes the page background, so it only reads against a tinted
+     neighbour — hence the schema note pairing this with sectionTint.
+     Compensated with a negative margin rather than padding: `section-y` sets
+     `padding-block` from @layer utilities, which beats anything here on layer
+     order alone, so a padding-based fix silently does nothing in the shape
+     where the even child is the <section> itself (animationStyle "none").
+     Nothing sets margin on a section, so this holds in both shapes. */
+  [data-section-divider="angled"] main > :nth-child(even) {
+    clip-path: polygon(0 2rem, 100% 0, 100% 100%, 0 100%);
+    margin-block-start: -2rem;
+  }
+
+  [data-section-divider="curve"] main > :nth-child(even) {
+    border-start-start-radius: 2.5rem;
+    border-start-end-radius: 2.5rem;
+  }
+
+  /* Textures paint over body's background-color; every one is kept faint enough
+     that the text/background pairs validate-sites.mjs checks still hold. */
+  [data-surface-texture="noise"] body {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+  }
+
+  [data-surface-texture="grid"] body {
+    background-image:
+      repeating-linear-gradient(
+        to right,
+        color-mix(in srgb, var(--brand-border) 55%, transparent) 0 1px,
+        transparent 1px 5rem
+      ),
+      repeating-linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--brand-border) 55%, transparent) 0 1px,
+        transparent 1px 5rem
+      );
+  }
+
+  [data-surface-texture="dots"] body {
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--brand-border) 85%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 1.25rem 1.25rem;
+  }
+
+  [data-surface-texture="wash"] body {
+    background-image: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--brand-primary) 7%, transparent) 0,
+      transparent 40rem
+    );
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+}
+
+/*
+ * staggerChildren.
+ *
+ * Scroll-driven rather than JavaScript: each grid item carries its own view()
+ * timeline, so items further down the grid finish later on their own and there
+ * is no delay ladder to keep in sync. It is wrapped in @supports on purpose —
+ * where the property is missing nothing applies and the items are simply
+ * visible, which is the only acceptable failure mode for client content.
+ *
+ * The selector targets grid containers by their Tailwind class rather than a
+ * marker class, which keeps it off the marquee and filmstrip lists (both flex).
+ */
+@keyframes stagger-rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-stagger="on"] :is(ul, ol, dl)[class*="grid"] > * {
+      animation: stagger-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 20%;
+    }
+  }
 }

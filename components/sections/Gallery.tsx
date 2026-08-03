@@ -34,6 +34,8 @@ export function Gallery({ config }: Props) {
         <Masonry gallery={gallery} />
       ) : gallery.variant === "filmstrip" ? (
         <Filmstrip gallery={gallery} />
+      ) : gallery.variant === "justified" ? (
+        <Justified gallery={gallery} />
       ) : (
         <Grid gallery={gallery} />
       )}
@@ -67,6 +69,34 @@ function Grid({ gallery }: { gallery: GalleryContent }) {
       {gallery.images.map((image) => (
         <li key={image.src} className="relative aspect-square overflow-hidden rounded-brand">
           <Picture image={image} sizes="(max-width: 1024px) 50vw, 25vw" />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/**
+ * Justified rows: fixed row height, variable tile width, every row flush to
+ * both edges.
+ *
+ * A true justified layout solves for the row break from each image's real
+ * aspect ratio, which needs the dimensions and therefore JavaScript. This gets
+ * the same rhythm from `flex-grow` plus a repeating basis pattern — the widths
+ * still vary and the rows still fill, it just isn't solving anything. That is
+ * the whole reason this variant costs no JS.
+ */
+const JUSTIFIED_BASIS = [30, 22, 26, 20, 34, 24];
+
+function Justified({ gallery }: { gallery: GalleryContent }) {
+  return (
+    <ul className="flex flex-wrap gap-3">
+      {gallery.images.map((image, i) => (
+        <li
+          key={image.src}
+          className="relative h-40 grow overflow-hidden rounded-brand sm:h-52 lg:h-60"
+          style={{ flexBasis: `${JUSTIFIED_BASIS[i % JUSTIFIED_BASIS.length]}%` }}
+        >
+          <Picture image={image} sizes="(max-width: 640px) 50vw, 33vw" />
         </li>
       ))}
     </ul>

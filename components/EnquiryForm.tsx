@@ -34,9 +34,6 @@ type Props = {
   className?: string;
 };
 
-export const field =
-  "w-full rounded-brand border border-line bg-canvas px-4 py-3 text-ink outline-none transition-colors focus:border-primary";
-
 // A "use server" file may only export async functions, so this plain object
 // lives here instead of alongside submitEnquiry in app/actions.ts.
 export const initialEnquiryState: EnquiryState = { status: "idle" };
@@ -178,7 +175,7 @@ export function OptionsField({
         id={`${id}-subject`}
         name="subject"
         required={required}
-        className={field}
+        className="field"
         value={selected}
         onChange={(e) => setSelected(e.target.value)}
       >
@@ -216,7 +213,7 @@ export function ContactFields({
           required
           autoComplete="name"
           defaultValue={values?.name}
-          className={field}
+          className="field"
         />
       </Field>
 
@@ -229,7 +226,7 @@ export function ContactFields({
             required
             autoComplete="email"
             defaultValue={values?.email}
-            className={field}
+            className="field"
           />
         </Field>
 
@@ -240,7 +237,7 @@ export function ContactFields({
             type="tel"
             autoComplete="tel"
             defaultValue={values?.phone}
-            className={field}
+            className="field"
           />
         </Field>
       </div>
@@ -265,7 +262,7 @@ export function MessageField({
         name="message"
         rows={5}
         defaultValue={value}
-        className={field}
+        className="field"
       />
     </Field>
   );
@@ -302,7 +299,7 @@ export function DateTimeFields({
             type="date"
             min={tomorrow()}
             defaultValue={values?.preferredDate}
-            className={field}
+            className="field"
           />
         </Field>
         <Field id={`${id}-time`} label="Preferred time" optional>
@@ -311,7 +308,7 @@ export function DateTimeFields({
             name="preferredTime"
             type="time"
             defaultValue={values?.preferredTime}
-            className={field}
+            className="field"
           />
         </Field>
       </div>
@@ -339,7 +336,7 @@ export function DateTimeFields({
           min={tomorrow()}
           value={date}
           onChange={(e) => setDate(e.target.value)}
-          className={field}
+          className="field"
         />
       </Field>
       <Field id={`${id}-time`} label="Preferred time" optional>
@@ -351,7 +348,7 @@ export function DateTimeFields({
           // placeholder when the chosen date's day doesn't offer this slot.
           value={slots.includes(time) ? time : ""}
           onChange={(e) => setTime(e.target.value)}
-          className={cn(field, "disabled:cursor-not-allowed disabled:opacity-50")}
+          className="field disabled:cursor-not-allowed disabled:opacity-50"
         >
           <option value="" disabled>
             {date === "" ? "Choose a date first" : closed ? "No slots that day" : "Please choose…"}

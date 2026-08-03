@@ -17,7 +17,7 @@ import { Team } from "@/components/sections/Team";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Timeline } from "@/components/sections/Timeline";
 import { SECTION_FLAG, type SectionId, type SiteConfig } from "@/lib/schema";
-import { MOTION } from "@/lib/theme";
+import { MOTION, REVEAL } from "@/lib/theme";
 import { warnInDev } from "@/lib/utils";
 
 /**
@@ -50,6 +50,9 @@ const SECTIONS: Record<SectionId, ComponentType<{ config: SiteConfig }>> = {
 
 export function SectionRenderer({ config }: { config: SiteConfig }) {
   const motion = MOTION[config.branding.animationStyle];
+  // Resolved here rather than inside Reveal so that client component never has
+  // to import lib/theme — see the note in Reveal.tsx.
+  const reveal = REVEAL[config.branding.revealMotion](motion.y);
 
   return (
     <>
@@ -69,7 +72,12 @@ export function SectionRenderer({ config }: { config: SiteConfig }) {
         if (index === 0) return <Section key={id} config={config} />;
 
         return (
-          <Reveal key={id} y={motion.y} duration={motion.duration}>
+          <Reveal
+            key={id}
+            initial={reveal.from}
+            animate={reveal.to}
+            duration={motion.duration}
+          >
             <Section config={config} />
           </Reveal>
         );

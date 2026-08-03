@@ -1,9 +1,9 @@
-import { Button, Eyebrow, Picture } from "@/components/ui";
+import { Button, Card, Eyebrow, Picture } from "@/components/ui";
 import type { HeroContent, SiteConfig } from "@/lib/schema";
 import { cn } from "@/lib/utils";
 
 /**
- * Five genuinely different first impressions.
+ * Eight genuinely different first impressions.
  *
  * The hero does more than any other section to stop two client sites feeling
  * like the same template, which is why it carries the most variants.
@@ -27,6 +27,12 @@ export function Hero({ config }: Props) {
       return <Video hero={hero} />;
     case "angled":
       return <Angled hero={hero} />;
+    case "split-offset":
+      return <SplitOffset hero={hero} />;
+    case "typographic":
+      return <Typographic hero={hero} />;
+    case "card-overlay":
+      return <CardOverlay hero={hero} />;
     case "fullscreen-image":
     default:
       return <FullscreenImage hero={hero} />;
@@ -37,6 +43,13 @@ export function Hero({ config }: Props) {
  * Shared copy block
  * ------------------------------------------------------------------ */
 
+/** `display` exists for the typographic variant, where the headline is the layout. */
+const HEADLINE_SIZE = {
+  lg: "text-4xl sm:text-5xl lg:text-6xl",
+  xl: "text-4xl sm:text-6xl lg:text-7xl",
+  display: "text-5xl leading-[0.95] sm:text-7xl lg:text-8xl",
+} as const;
+
 function HeroCopy({
   hero,
   onDark = false,
@@ -44,7 +57,7 @@ function HeroCopy({
 }: {
   hero: HeroContent;
   onDark?: boolean;
-  size?: "lg" | "xl";
+  size?: keyof typeof HEADLINE_SIZE;
 }) {
   const centered = hero.align === "center";
 
@@ -54,15 +67,7 @@ function HeroCopy({
         <Eyebrow className={onDark ? "text-white/85" : undefined}>{hero.eyebrow}</Eyebrow>
       ) : null}
 
-      <h1
-        className={cn(
-          "font-bold",
-          size === "xl"
-            ? "text-4xl sm:text-6xl lg:text-7xl"
-            : "text-4xl sm:text-5xl lg:text-6xl",
-          onDark && "text-white",
-        )}
-      >
+      <h1 className={cn("font-bold", HEADLINE_SIZE[size], onDark && "text-white")}>
         {hero.headline}
       </h1>
 
@@ -235,6 +240,75 @@ function Angled({ hero }: { hero: HeroContent }) {
           <Picture image={hero.image} sizes="100vw" priority />
         </div>
       ) : null}
+    </section>
+  );
+}
+
+/**
+ * Asymmetric split: the copy sits high on a narrow column and the image runs
+ * wider than its own column and lower than the text, so the two halves refuse
+ * to line up. `overflow-hidden` on the section is what clips the overhang.
+ */
+function SplitOffset({ hero }: { hero: HeroContent }) {
+  return (
+    <section id="hero" className="relative overflow-hidden bg-canvas">
+      <div className="container-page grid items-start gap-10 pt-32 pb-16 lg:grid-cols-12 lg:gap-6 lg:pt-44 lg:pb-28">
+        <div className="lg:col-span-6 lg:pr-6">
+          <HeroCopy hero={hero} size="xl" />
+        </div>
+        {hero.image ? (
+          <div className="relative aspect-4/3 w-full overflow-hidden rounded-brand lg:col-span-6 lg:mt-20 lg:aspect-3/4 lg:w-[112%]">
+            <Picture image={hero.image} sizes="(max-width: 1024px) 100vw, 58vw" priority />
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
+}
+
+/**
+ * No image at all — the headline is the layout.
+ *
+ * The restrained sites (attorney, funeral) previously had to borrow
+ * `minimal-centered` for this feel; this one is left-aligned and much larger,
+ * so the two no longer read as the same page.
+ */
+function Typographic({ hero }: { hero: HeroContent }) {
+  return (
+    <section id="hero" className="relative overflow-hidden bg-canvas">
+      <div className="container-page pt-36 pb-20 lg:pt-48 lg:pb-28">
+        <HeroCopy hero={hero} size="display" />
+        <span aria-hidden="true" className="mt-14 block h-px w-full bg-line" />
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Full-bleed image with the copy in a card that overlaps its bottom edge.
+ *
+ * The text sits on `surface` rather than on the photo, so this is the one image
+ * hero whose contrast does not depend on `overlayOpacity` being set high enough.
+ */
+function CardOverlay({ hero }: { hero: HeroContent }) {
+  return (
+    <section id="hero" className="relative overflow-hidden bg-canvas">
+      <div className="relative min-h-[64svh] w-full lg:min-h-[80svh]">
+        {hero.image ? (
+          <>
+            <Picture image={hero.image} sizes="100vw" priority />
+            <Overlay opacity={hero.overlayOpacity} />
+          </>
+        ) : (
+          <div aria-hidden="true" className="absolute inset-0 bg-primary" />
+        )}
+      </div>
+
+      <div className="container-page relative z-10 -mt-20 pb-16 lg:-mt-32 lg:pb-24">
+        <Card className="max-w-2xl p-8 shadow-brand sm:p-12">
+          <HeroCopy hero={hero} />
+        </Card>
+      </div>
     </section>
   );
 }

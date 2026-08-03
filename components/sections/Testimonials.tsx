@@ -23,6 +23,8 @@ export function Testimonials({ config }: Props) {
         <Grid testimonials={testimonials} />
       ) : testimonials.variant === "single-featured" ? (
         <SingleFeatured testimonials={testimonials} />
+      ) : testimonials.variant === "wall" ? (
+        <Wall testimonials={testimonials} />
       ) : (
         <TestimonialsCarousel items={testimonials.items} />
       )}
@@ -53,6 +55,40 @@ function Grid({ testimonials }: { testimonials: TestimonialsContent }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+/**
+ * Masonry quotes. Unlike `grid` the cards keep their natural height, so a
+ * two-line review and a paragraph-long one sit next to each other without the
+ * short one growing a block of empty space — which is what a business with
+ * uneven review lengths actually has.
+ *
+ * CSS columns rather than a grid: no JS, and `break-inside-avoid` is the whole
+ * trick. Reading order runs down each column, which for independent quotes is
+ * not a comprehension problem.
+ */
+function Wall({ testimonials }: { testimonials: TestimonialsContent }) {
+  return (
+    <div className="columns-1 gap-[var(--brand-gap)] sm:columns-2 lg:columns-3 [&>*]:mb-[var(--brand-gap)]">
+      {testimonials.items.map((item) => (
+        <Card key={item.name} className="flex break-inside-avoid flex-col gap-3 p-6">
+          {item.rating ? <Rating value={item.rating} /> : null}
+          <blockquote className="leading-relaxed">“{item.quote}”</blockquote>
+          <footer className="flex items-center gap-3 pt-1 text-sm">
+            {item.image ? (
+              <span className="relative size-9 shrink-0 overflow-hidden rounded-full">
+                <Picture image={item.image} sizes="36px" />
+              </span>
+            ) : null}
+            <span>
+              <span className="block font-semibold">{item.name}</span>
+              {item.role ? <span className="block text-muted">{item.role}</span> : null}
+            </span>
+          </footer>
+        </Card>
+      ))}
+    </div>
   );
 }
 

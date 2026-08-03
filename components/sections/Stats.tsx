@@ -20,7 +20,13 @@ export function Stats({ config }: Props) {
         </h2>
       ) : null}
 
-      {stats.variant === "cards" ? <Cards stats={stats} /> : <Bar stats={stats} />}
+      {stats.variant === "cards" ? (
+        <Cards stats={stats} />
+      ) : stats.variant === "divided" ? (
+        <Divided stats={stats} />
+      ) : (
+        <Bar stats={stats} />
+      )}
     </Section>
   );
 }
@@ -37,6 +43,31 @@ function Bar({ stats }: { stats: StatsContent }) {
         <div key={item.label} className="flex flex-col-reverse items-center gap-1 text-center">
           <dt className="text-sm tracking-wide opacity-80">{item.label}</dt>
           <dd className="font-heading text-4xl font-bold sm:text-5xl">{item.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+/**
+ * One row separated by hairlines instead of whitespace — the shape a law firm
+ * or a funeral home wants, where `bar`'s colour block would be too loud.
+ *
+ * `divide-x` rather than per-item borders: it is a single non-wrapping row on
+ * desktop, so the "not the first in its row" problem that makes nth-child
+ * borders fragile in a wrapping grid does not arise. On mobile it stacks and
+ * the rules turn horizontal.
+ */
+function Divided({ stats }: { stats: StatsContent }) {
+  return (
+    <dl className="flex flex-col divide-y divide-line sm:flex-row sm:divide-x sm:divide-y-0">
+      {stats.items.map((item) => (
+        <div
+          key={item.label}
+          className="flex flex-1 flex-col-reverse items-center gap-1 px-6 py-6 text-center sm:py-2"
+        >
+          <dt className="text-sm text-muted">{item.label}</dt>
+          <dd className="font-heading text-4xl font-bold text-primary sm:text-5xl">{item.value}</dd>
         </div>
       ))}
     </dl>
