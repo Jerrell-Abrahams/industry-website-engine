@@ -23,16 +23,30 @@ const EnquirySchema = z.object({
   name: z.string({ error: "Please enter your name" }).trim().min(2, "Please enter your name").max(100),
   email: z.email("Please enter a valid email address"),
   phone: z.string().trim().max(40).optional(),
+  // Optional because the contact form never renders this field — only booking does.
+  contactMethod: z.string().trim().max(40).optional(),
   subject: z.string().trim().max(160).optional(),
   message: z.string().trim().max(4000).optional(),
   preferredDate: z.string().trim().max(40).optional(),
   preferredTime: z.string().trim().max(40).optional(),
+}).superRefine((enquiry, ctx) => {
+  // Every reply method but Email needs a number to reach. Both forms are
+  // noValidate and only BookingSteps hand-rolls checkValidity, so the phone
+  // input's `required` is inert on the flat form — this is the only real gate.
+  if (enquiry.contactMethod && enquiry.contactMethod !== "Email" && !enquiry.phone) {
+    ctx.addIssue({
+      code: "custom",
+      path: ["phone"],
+      message: "Please add a phone number, or choose Email instead.",
+    });
+  }
 });
 
 export type EnquiryFields =
   | "name"
   | "email"
   | "phone"
+  | "contactMethod"
   | "subject"
   | "message"
   | "preferredDate"
@@ -81,6 +95,7 @@ export async function submitEnquiry(
     name: str(formData, "name"),
     email: str(formData, "email"),
     phone: str(formData, "phone"),
+    contactMethod: str(formData, "contactMethod"),
     subject: str(formData, "subject"),
     message: str(formData, "message"),
     preferredDate: str(formData, "preferredDate"),
@@ -117,6 +132,7 @@ export async function submitEnquiry(
     `Name: ${enquiry.name}`,
     `Email: ${enquiry.email}`,
     enquiry.phone && `Phone: ${enquiry.phone}`,
+    enquiry.contactMethod && `Preferred contact: ${enquiry.contactMethod}`,
     enquiry.subject && `Subject: ${enquiry.subject}`,
     enquiry.preferredDate && `Preferred date: ${enquiry.preferredDate}`,
     enquiry.preferredTime && `Preferred time: ${enquiry.preferredTime}`,

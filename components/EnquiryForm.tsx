@@ -26,6 +26,8 @@ type Props = {
   /** Drives the time-slot <select>; omitted entirely (falls back to a plain time input) if empty. */
   businessHours?: Business["businessHours"];
   slotLengthMinutes?: number;
+  /** Reply-method dropdown; omitted entirely when empty. Booking passes it, contact doesn't. */
+  contactMethods?: string[];
   /** Shows a "Confirm on WhatsApp" link after a successful submit. */
   whatsappNumber?: string;
   businessName?: string;
@@ -45,6 +47,7 @@ export function EnquiryForm({
   askPreferredTime = false,
   businessHours = [],
   slotLengthMinutes = 60,
+  contactMethods = [],
   whatsappNumber,
   businessName,
   formType = "contact",
@@ -70,7 +73,12 @@ export function EnquiryForm({
         </p>
       ) : null}
 
-      <ContactFields id={id} errorFor={errorFor} values={state.values} />
+      <ContactFields
+        id={id}
+        errorFor={errorFor}
+        values={state.values}
+        contactMethods={contactMethods}
+      />
 
       <OptionsField
         id={id}
@@ -197,12 +205,29 @@ export function ContactFields({
   id,
   errorFor,
   values,
+  contactMethods = [],
 }: {
   id: string;
   errorFor: (name: string) => string | undefined;
   /** Previously submitted values, restored after a failed submit. */
   values?: EnquiryState["values"];
+  /** Reply-method options; the dropdown is omitted entirely when empty. */
+  contactMethods?: string[];
 }) {
+  // Controlled for the same reason as OptionsField (see its comment). Also drives
+  // whether phone is required — every method but Email needs a number to reach.
+  // Defaults to the first option rather than a "Please choose…" placeholder: both
+  // forms are noValidate and only BookingSteps hand-rolls checkValidity, so a
+  // `required` select would block there and silently pass here. Email is always
+  // available and is already what happens by default, since replies go to the
+  // address the visitor typed.
+  const [contactMethod, setContactMethod] = useState(
+    values?.contactMethod ?? contactMethods[0] ?? "",
+  );
+  // Compared against the one method that doesn't need a number, so adding "SMS"
+  // to the list later needs no change here.
+  const needsPhone = contactMethod !== "" && contactMethod !== "Email";
+
   return (
     <>
       <Field id={`${id}-name`} label="Your name" error={errorFor("name")}>
@@ -217,6 +242,31 @@ export function ContactFields({
         />
       </Field>
 
+      {/* Above the phone field, not below: the visitor picks a method and then
+          meets a phone input already labelled correctly, rather than passing an
+          "(optional)" phone that retroactively becomes required behind them. */}
+      {contactMethods.length > 0 ? (
+        <Field
+          id={`${id}-contactMethod`}
+          label="How should we get back to you?"
+          error={errorFor("contactMethod")}
+        >
+          <select
+            id={`${id}-contactMethod`}
+            name="contactMethod"
+            className="field"
+            value={contactMethod}
+            onChange={(e) => setContactMethod(e.target.value)}
+          >
+            {contactMethods.map((method) => (
+              <option key={method} value={method}>
+                {method}
+              </option>
+            ))}
+          </select>
+        </Field>
+      ) : null}
+
       <div className="grid gap-4 sm:grid-cols-2">
         <Field id={`${id}-email`} label="Email" error={errorFor("email")}>
           <input
@@ -230,11 +280,12 @@ export function ContactFields({
           />
         </Field>
 
-        <Field id={`${id}-phone`} label="Phone" optional error={errorFor("phone")}>
+        <Field id={`${id}-phone`} label="Phone" optional={!needsPhone} error={errorFor("phone")}>
           <input
             id={`${id}-phone`}
             name="phone"
             type="tel"
+            required={needsPhone}
             autoComplete="tel"
             defaultValue={values?.phone}
             className="field"

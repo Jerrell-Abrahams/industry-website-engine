@@ -129,7 +129,7 @@ the same template recoloured.
 
 `npm run validate` fails if two client sites share the same **hero + services**
 pair, because that combination is what determines a site's structural feel. That
-is a hard ceiling of 8 × 4 = **32 client sites**, of which 17 are used.
+is a hard ceiling of 8 × 4 = **32 client sites**, of which 19 are used.
 
 `npm run check-variants` catches the one failure the other checks cannot see: a
 variant declared in `VARIANTS` with no `case` in its component. Typecheck,

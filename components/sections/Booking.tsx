@@ -29,6 +29,11 @@ export function Booking({ config }: Props) {
     askPreferredTime: booking.askPreferredTime,
     businessHours: config.business.businessHours,
     slotLengthMinutes: booking.slotLengthMinutes,
+    // Derived, not configured: business.email and business.phone are both required
+    // by the schema so those two always apply, and WhatsApp reuses the gate above.
+    // Nothing for the site configs to get wrong, and the fixed values are what let
+    // the phone field know when it's required.
+    contactMethods: ["Email", "Phone call", ...(whatsappNumber ? ["WhatsApp"] : [])],
     whatsappNumber,
     businessName: config.business.name,
   };

@@ -45,6 +45,7 @@ type Props = {
   askPreferredTime?: boolean;
   businessHours?: Business["businessHours"];
   slotLengthMinutes?: number;
+  contactMethods?: string[];
   whatsappNumber?: string;
   businessName?: string;
 };
@@ -58,6 +59,7 @@ export function BookingSteps({
   askPreferredTime = false,
   businessHours = [],
   slotLengthMinutes = 60,
+  contactMethods = [],
   whatsappNumber,
   businessName,
 }: Props) {
@@ -193,7 +195,12 @@ export function BookingSteps({
             />
           ) : (
             <>
-              <ContactFields id={id} errorFor={errorFor} values={state.values} />
+              <ContactFields
+                id={id}
+                errorFor={errorFor}
+                values={state.values}
+                contactMethods={contactMethods}
+              />
               <MessageField id={id} error={errorFor("message")} value={state.values?.message} />
             </>
           )}
