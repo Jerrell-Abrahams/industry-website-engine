@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
+import { DemoPill } from "@/components/DemoPill";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -47,7 +48,10 @@ export function generateMetadata(): Metadata {
       description: seo.description,
       images: seo.ogImage ? [absoluteUrl(config, seo.ogImage)] : undefined,
     },
-    robots: { index: true, follow: true },
+    // Demos carry invented business names, addresses and geo coordinates, and
+    // emit them as LocalBusiness JSON-LD. Keeping them out of the index stops
+    // 19 fictional businesses competing with real ones in local search.
+    robots: config.demo ? { index: false, follow: false } : { index: true, follow: true },
   };
 }
 
@@ -91,6 +95,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {features.whatsapp && business.whatsapp ? (
           <WhatsAppButton number={business.whatsapp} businessName={business.name} />
         ) : null}
+
+        {config.demo ? <DemoPill siteId={config.id} /> : null}
 
         <JsonLd config={config} />
         <FaqJsonLd config={config} />

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui";
 import { Icon } from "@/lib/icon";
 import type { SiteConfig } from "@/lib/schema";
-import { cn, formatAddress, renderLegal, telHref } from "@/lib/utils";
+import { AGENCY, agencyHref, cn, formatAddress, renderLegal, telHref } from "@/lib/utils";
 
 type Props = { config: SiteConfig };
 
@@ -21,7 +21,10 @@ export function Footer({ config }: Props) {
       <div className="border-t border-line">
         <div className="container-page flex flex-col items-center justify-between gap-3 py-5 text-sm text-muted sm:flex-row">
           <p>{renderLegal(footer.legal, config.business.name)}</p>
-          <Socials config={config} />
+          <div className="flex flex-col items-center gap-3 sm:flex-row">
+            <PoweredBy config={config} />
+            <Socials config={config} />
+          </div>
         </div>
       </div>
     </footer>
@@ -180,6 +183,20 @@ function Newsletter({ config }: Props) {
         </button>
       </form>
     </div>
+  );
+}
+
+/** Agency credit. Unconditional — demo or paying client, every site carries it. */
+function PoweredBy({ config }: Props) {
+  return (
+    <a
+      href={agencyHref(config.id)}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="whitespace-nowrap transition-colors hover:text-primary"
+    >
+      {`Powered by ${AGENCY.name}`}
+    </a>
   );
 }
 

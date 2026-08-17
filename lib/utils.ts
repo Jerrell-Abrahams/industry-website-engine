@@ -38,6 +38,14 @@ export function renderLegal(template: string, businessName: string): string {
     .replaceAll("{business}", businessName);
 }
 
+/** The agency behind the engine. Both the footer credit and the demo pill point here. */
+export const AGENCY = { name: "Complex AI", url: "https://complexai.co.za" } as const;
+
+/** `?ref=<site id>` so a lead can be traced back to the site that sent it. */
+export function agencyHref(siteId: string): string {
+  return `${AGENCY.url}?ref=${encodeURIComponent(siteId)}`;
+}
+
 /**
  * Absolute URL for OG tags and sitemap entries, which reject relative paths.
  */

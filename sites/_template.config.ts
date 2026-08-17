@@ -60,6 +60,11 @@ export const templateConfig: SiteConfigInput = {
   /** Lowercase, hyphens only. Must match the key in sites/index.ts and /public/<id>/. */
   id: "newclient",
 
+  // Omitted on purpose: `demo` defaults to true, which is what a new config
+  // always is. When the client pays, set `demo: false` here — that drops the
+  // "Demo site" pill and lets the site into search results. The "Powered by
+  // Complex AI" footer credit stays either way.
+
   business: {
     name: "New Client Trading",
     tagline: "A short line that would fit on a shopfront",

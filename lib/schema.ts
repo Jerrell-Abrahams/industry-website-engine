@@ -530,6 +530,20 @@ export const SiteConfigSchema = z
   .object({
     /** Must match the /public/<id>/ folder and the NEXT_PUBLIC_SITE value. */
     id: z.string().regex(/^[a-z0-9-]+$/, "Lowercase letters, digits and hyphens only"),
+
+    /**
+     * A showcase site rather than a paying client's.
+     *
+     * Defaults to true because that is what a new config always is — you write
+     * one to demo an industry, and only later sell it. A demo shows the "Demo
+     * site" pill and is kept out of search results; setting this to false at
+     * sale time removes the pill and restores indexing. The default is
+     * deliberately the loud direction: a client seeing a stray "Demo site"
+     * badge is a one-line fix, whereas a demo that quietly forgot to mark
+     * itself would go on posing as a real business in Google.
+     */
+    demo: z.boolean().default(true),
+
     business: businessSchema,
     branding: brandingSchema,
     features: featuresSchema,

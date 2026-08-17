@@ -119,7 +119,13 @@ for (const [id, raw] of Object.entries(sites)) {
     console.error(`\n✗ ${id}`);
     for (const problem of problems) console.error(`    ${problem}`);
   } else {
-    console.log(`✓ ${id} — ${config.layout.length} sections, ${config.business.name}`);
+    // `demo` defaults to true, so a LIVE tag means someone turned it off
+    // deliberately at sale time. Printing it makes an accidental flip — which
+    // would put a fictional business into Google — visible on every run.
+    const status = config.demo ? "demo" : "LIVE";
+    console.log(
+      `✓ ${id} [${status}] — ${config.layout.length} sections, ${config.business.name}`,
+    );
   }
 }
 
