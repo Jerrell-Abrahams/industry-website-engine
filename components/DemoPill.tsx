@@ -1,4 +1,4 @@
-import { AGENCY, agencyHref } from "@/lib/utils";
+import { agencyHref } from "@/lib/utils";
 
 /**
  * "Demo site" badge, shown on every site whose config has `demo: true`.
@@ -18,7 +18,6 @@ export function DemoPill({ siteId }: { siteId: string }) {
       className="fixed bottom-5 left-5 z-40 rounded-full bg-neutral-900/85 px-3.5 py-2 text-xs font-medium text-white shadow-lg backdrop-blur-sm transition-colors hover:bg-neutral-900"
     >
       Demo site
-      <span className="ml-1.5 opacity-70">{`· built by ${AGENCY.name}`}</span>
     </a>
   );
 }
