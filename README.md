@@ -290,9 +290,38 @@ Each client is a separate Vercel project pointing at **this same repository**.
 
 4. Deploy, then point the client's domain at the project.
 
-Pushing to `main` redeploys every client project at once. A change to a config
-file only affects the client that owns it; a change to a component affects all
-of them, so run `npm run validate` before pushing.
+If you create the project by importing the repo in the dashboard, disconnect
+git afterwards or every client redeploys on every unrelated push. The existing
+projects are all CLI-deployed — see below.
+
+### Redeploying after a change
+
+The Vercel projects are **not** connected to this repository's git history —
+they are deployed from the CLI. Pushing to `main` therefore deploys nothing.
+Every project has to be deployed explicitly:
+
+```bash
+vercel link --yes --project <site>   # rewrites .vercel/ and pulls that project's dev env into .env.local
+vercel --prod --yes
+```
+
+A change to a config file only affects the client that owns it, so redeploy
+that one. A change to anything in `components/`, `lib/` or `app/` affects all
+of them, so loop over every site:
+
+```bash
+for s in restaurant barber attorney mechanic church coffee gym spa plumber \
+         guesthouse holiday dentist doctor estate cleaning security \
+         construction turbo funeral; do
+  vercel link --yes --project "$s" >/dev/null && vercel --prod --yes >/dev/null \
+    && echo "OK   $s" || echo "FAIL $s"
+done
+```
+
+Run `npm run validate` first. Two things the loop leaves behind: `.env.local`
+is overwritten with the last-linked project's variables, and `.vercel/` points
+at that project — both gitignored, but `npm run dev` will render the wrong site
+until you re-link the one you are working on.
 
 ### Contact form
 
