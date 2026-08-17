@@ -84,7 +84,6 @@ export const funeralConfig: SiteConfigInput = {
     booking: false,
     gallery: false,
     testimonials: true,
-    blog: false,
     pricing: true,
     whatsapp: true,
     newsletter: false,

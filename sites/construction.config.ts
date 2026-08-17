@@ -63,12 +63,12 @@ export const constructionConfig: SiteConfigInput = {
     booking: false,
     gallery: true,
     testimonials: true,
-    blog: false,
     pricing: false,
     whatsapp: true,
     newsletter: false,
     map: true,
     faq: true,
+    openNowBadge: true,
   },
 
   seo: {

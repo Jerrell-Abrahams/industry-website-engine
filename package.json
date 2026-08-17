@@ -13,9 +13,12 @@
     "placeholders": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-placeholders.mjs",
     "photos": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/fetch-photos.mjs",
     "check": "npm run validate && npm run check-variants && npm run typecheck && npm run build",
-    "sheets": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/contact-sheet.mjs"
+    "sheets": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/contact-sheet.mjs",
+    "new": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/new-site.mjs",
+    "deploy:all": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/deploy-all.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.28.0",
     "motion": "^12.43.0",
     "next": "16.2.12",

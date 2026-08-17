@@ -82,7 +82,6 @@ export const churchConfig: SiteConfigInput = {
     booking: false,
     gallery: true,
     testimonials: true,
-    blog: false,
     pricing: false,
     whatsapp: true,
     newsletter: true,

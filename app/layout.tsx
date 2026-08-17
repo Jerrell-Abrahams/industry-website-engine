@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 
 import { DemoPill } from "@/components/DemoPill";
@@ -97,6 +98,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ) : null}
 
         {config.demo ? <DemoPill siteId={config.id} /> : null}
+
+        {/* Cookieless, so it needs no consent banner — see the POPIA notice at /privacy. */}
+        {features.analytics ? <Analytics /> : null}
 
         <JsonLd config={config} />
         <FaqJsonLd config={config} />

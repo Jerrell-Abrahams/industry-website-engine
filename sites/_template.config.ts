@@ -5,15 +5,19 @@ import type { SiteConfigInput } from "@/lib/schema";
  * NEW CLIENT TEMPLATE
  * ─────────────────────────────────────────────────────────────────────────────
  *
- * 1.  cp sites/_template.config.ts sites/newclient.config.ts
- * 2.  Rename the export below to `newclientConfig` and set `id: "newclient"`.
- * 3.  Register it in sites/index.ts:      newclient: newclientConfig,
- * 4.  Fill this file in. Every visible string on the site comes from here.
- * 5.  npm run placeholders                 generates artwork in /public/newclient/
- * 6.  npm run validate                     schema, contrast and distinctiveness
- * 7.  NEXT_PUBLIC_SITE=newclient npm run dev
- * 8.  Drop the client's real photos over the generated SVGs in /public/newclient/
- * 9.  Create a Vercel project with NEXT_PUBLIC_SITE=newclient and deploy.
+ * 1.  npm run new -- newclient            copies this file, renames the export,
+ *                                        registers it in sites/index.ts and
+ *                                        generates artwork in /public/newclient/
+ * 2.  Fill the new file in. Every visible string on the site comes from here.
+ * 3.  npm run validate                    schema, contrast and distinctiveness
+ *                                        (it will fail until you pick variants
+ *                                        no other site already uses)
+ * 4.  NEXT_PUBLIC_SITE=newclient npm run dev
+ * 5.  Drop the client's real photos over the generated SVGs in /public/newclient/
+ * 6.  Create a Vercel project with NEXT_PUBLIC_SITE=newclient, then:
+ *       vercel link --yes --project newclient && vercel --prod --yes
+ * 7.  When they pay, set `demo: false` — drops the pill, allows indexing, and
+ *     publishes the POPIA notice at /privacy.
  *
  * This file is NOT registered in sites/index.ts and never ships. It exists to
  * be copied.
@@ -143,7 +147,6 @@ export const templateConfig: SiteConfigInput = {
     booking: false,
     gallery: false,
     testimonials: false,
-    blog: false, // reserved; no blog components ship yet
     pricing: false,
     whatsapp: true,
     newsletter: false,

@@ -61,7 +61,6 @@ export const guesthouseConfig: SiteConfigInput = {
     booking: true,
     gallery: true,
     testimonials: true,
-    blog: false,
     pricing: true,
     whatsapp: true,
     newsletter: false,

@@ -63,12 +63,12 @@ export const gymConfig: SiteConfigInput = {
     booking: true,
     gallery: false,
     testimonials: true,
-    blog: false,
     pricing: true,
     whatsapp: true,
     newsletter: false,
     map: true,
     faq: true,
+    openNowBadge: true,
   },
 
   seo: {

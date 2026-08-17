@@ -61,12 +61,12 @@ export const cleaningConfig: SiteConfigInput = {
     booking: true,
     gallery: false,
     testimonials: true,
-    blog: false,
     pricing: true,
     whatsapp: true,
     newsletter: false,
     map: false,
     faq: true,
+    openNowBadge: true,
   },
 
   seo: {

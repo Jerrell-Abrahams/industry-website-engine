@@ -60,12 +60,12 @@ export const coffeeConfig: SiteConfigInput = {
     booking: false,
     gallery: true,
     testimonials: true,
-    blog: false,
     pricing: false,
     whatsapp: true,
     newsletter: true,
     map: true,
     faq: true,
+    openNowBadge: true,
   },
 
   seo: {

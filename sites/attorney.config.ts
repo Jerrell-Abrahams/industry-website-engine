@@ -77,12 +77,12 @@ export const attorneyConfig: SiteConfigInput = {
     booking: false,
     gallery: false,
     testimonials: false,
-    blog: false,
     pricing: false,
     whatsapp: false,
     newsletter: false,
     map: true,
     faq: true,
+    openNowBadge: true,
   },
 
   seo: {

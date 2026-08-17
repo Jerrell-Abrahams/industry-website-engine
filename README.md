@@ -36,6 +36,8 @@ NEXT_PUBLIC_SITE=church   npm run dev
 | `npm run placeholders` | Regenerate placeholder SVGs from every config's palette |
 | `npm run sheets` | Contact sheet per site for reviewing photos against their alt text |
 | `npm run check` | validate → typecheck → build |
+| `npm run new -- <id>` | Scaffold a client: config, registry entry, placeholder artwork |
+| `npm run deploy:all` | Deploy every client site to production (`-- --only <id>` for one) |
 
 ---
 
@@ -100,6 +102,36 @@ A section listed in `layout` whose flag is off is skipped by the renderer. You
 never edit the layout array to turn a feature off. `sites/attorney.config.ts` is
 the worked example: gallery, testimonials, pricing, booking, WhatsApp and
 newsletter are all off, and no code changes to achieve it.
+
+Two flags are not sections:
+
+- `analytics` — Vercel Analytics, off by default. Cookieless, so it needs no
+  consent banner.
+- `openNowBadge` — "Open now"/"Closed" beside the opening hours, computed in
+  the browser against `Africa/Johannesburg`. It is off for 24/7 emergency
+  trades (`security`, `plumber`, `funeral`), where "Closed" would be worse than
+  saying nothing, and for stay-over and service-time businesses where trading
+  hours are not the question a visitor is asking.
+
+### Demo vs live
+
+`demo` sits at the config root and **defaults to true**, because that is what a
+new config is. A demo shows the "Demo site" pill and is `noindex` in both
+`robots.txt` and page metadata — 19 invented businesses with plausible South
+African addresses do not belong in local search results.
+
+Setting `demo: false` at sale time drops the pill, allows indexing, and
+publishes the POPIA privacy notice at `/privacy` (with a footer link). Demos
+404 that route: publishing a privacy notice for a business that does not exist
+would be its own small lie. `npm run validate` prints `[demo]` or `[LIVE]` per
+site so a stray flip is visible.
+
+The notice is generated from config so it cannot drift from what the contact
+form actually collects. `privacy.informationOfficer` and
+`privacy.informationOfficerEmail` override the business defaults;
+`privacy.extraParagraphs` appends anything industry-specific. **Have it
+reviewed by someone who knows POPIA before it goes on a paying client's site** —
+it is drafted from the Act's general principles, not legal advice.
 
 ### Variants
 
@@ -310,18 +342,16 @@ that one. A change to anything in `components/`, `lib/` or `app/` affects all
 of them, so loop over every site:
 
 ```bash
-for s in restaurant barber attorney mechanic church coffee gym spa plumber \
-         guesthouse holiday dentist doctor estate cleaning security \
-         construction turbo funeral; do
-  vercel link --yes --project "$s" >/dev/null && vercel --prod --yes >/dev/null \
-    && echo "OK   $s" || echo "FAIL $s"
-done
+npm run deploy:all                  # every client site
+npm run deploy:all -- --only barber # just one
 ```
 
-Run `npm run validate` first. Two things the loop leaves behind: `.env.local`
-is overwritten with the last-linked project's variables, and `.vercel/` points
-at that project — both gitignored, but `npm run dev` will render the wrong site
-until you re-link the one you are working on.
+It reads the site list from `sites/index.ts`, runs `validate` first and aborts
+if that fails, and retries each site once before giving up. Two things it
+leaves behind: `.env.local` is overwritten with the last-linked project's
+variables, and `.vercel/` points at that project — both gitignored, but
+`npm run dev` will render the wrong site until you re-link the one you are
+working on.
 
 ### Contact form
 

@@ -87,12 +87,12 @@ export const doctorConfig: SiteConfigInput = {
     gallery: false,
     // See the file header — HPCSA advertising rules, not an oversight.
     testimonials: false,
-    blog: false,
     pricing: true,
     whatsapp: true,
     newsletter: false,
     map: true,
     faq: true,
+    openNowBadge: true,
   },
 
   seo: {

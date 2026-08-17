@@ -61,7 +61,6 @@ export const plumberConfig: SiteConfigInput = {
     booking: false,
     gallery: false,
     testimonials: true,
-    blog: false,
     pricing: false,
     whatsapp: true,
     newsletter: false,

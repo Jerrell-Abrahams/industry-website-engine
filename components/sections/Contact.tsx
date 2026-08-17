@@ -1,4 +1,5 @@
 import { EnquiryForm } from "@/components/EnquiryForm";
+import { OpenNowBadge } from "@/components/OpenNowBadge";
 import { Card, Section, SectionHeader } from "@/components/ui";
 import { Icon } from "@/lib/icon";
 import type { ContactContent, SiteConfig } from "@/lib/schema";
@@ -138,6 +139,9 @@ function Details({ config, compact = false }: { config: SiteConfig; compact?: bo
           <h3 className="mb-3 flex items-center gap-2 font-semibold">
             <Icon name="Clock" size={18} className="text-primary" />
             Opening hours
+            {config.features.openNowBadge ? (
+              <OpenNowBadge hours={business.businessHours} />
+            ) : null}
           </h3>
           <dl className="flex flex-col gap-1.5 text-sm">
             {hours.map((h) => (

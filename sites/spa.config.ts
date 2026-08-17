@@ -62,12 +62,12 @@ export const spaConfig: SiteConfigInput = {
     booking: true,
     gallery: true,
     testimonials: true,
-    blog: false,
     pricing: true,
     whatsapp: true,
     newsletter: false,
     map: true,
     faq: true,
+    openNowBadge: true,
   },
 
   seo: {

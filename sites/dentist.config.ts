@@ -62,12 +62,12 @@ export const dentistConfig: SiteConfigInput = {
     booking: true,
     gallery: false,
     testimonials: true,
-    blog: false,
     pricing: false,
     whatsapp: true,
     newsletter: false,
     map: true,
     faq: true,
+    openNowBadge: true,
   },
 
   seo: {

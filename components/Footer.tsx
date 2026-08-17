@@ -22,6 +22,12 @@ export function Footer({ config }: Props) {
         <div className="container-page flex flex-col items-center justify-between gap-3 py-5 text-sm text-muted sm:flex-row">
           <p>{renderLegal(footer.legal, config.business.name)}</p>
           <div className="flex flex-col items-center gap-3 sm:flex-row">
+            {/* Demos have no /privacy page to link to — see app/privacy/page.tsx. */}
+            {config.demo ? null : (
+              <a href="/privacy" className="whitespace-nowrap transition-colors hover:text-primary">
+                Privacy
+              </a>
+            )}
             <PoweredBy config={config} />
             <Socials config={config} />
           </div>

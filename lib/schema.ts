@@ -223,13 +223,15 @@ const featuresSchema = z.object({
   booking: z.boolean().default(false),
   gallery: z.boolean().default(false),
   testimonials: z.boolean().default(false),
-  /** Reserved. No blog components ship yet — the flag is inert. */
-  blog: z.boolean().default(false),
   pricing: z.boolean().default(false),
   whatsapp: z.boolean().default(false),
   newsletter: z.boolean().default(false),
   map: z.boolean().default(false),
   faq: z.boolean().default(false),
+  /** Vercel Analytics. Off by default — turn it on per site, not repo-wide. */
+  analytics: z.boolean().default(false),
+  /** "Open now"/"Closed" badge beside the opening hours. */
+  openNowBadge: z.boolean().default(false),
 });
 
 /* ------------------------------------------------------------------ *
@@ -470,6 +472,21 @@ const footerSchema = z.object({
   cta: cta.optional(),
 });
 
+/**
+ * POPIA processing notice, rendered at /privacy on live sites only.
+ *
+ * The Act expects a data subject to be told who is accountable and how to
+ * reach them. Both fields fall back to the business itself, which is correct
+ * for an owner-run business — override them when a client has appointed a
+ * separate information officer.
+ */
+const privacySchema = z.object({
+  informationOfficer: z.string().optional(),
+  informationOfficerEmail: z.email().optional(),
+  /** Appended verbatim — anything industry-specific, e.g. patient records. */
+  extraParagraphs: z.array(z.string()).default([]),
+});
+
 /* ------------------------------------------------------------------ *
  * SEO
  * ------------------------------------------------------------------ */
@@ -551,6 +568,8 @@ export const SiteConfigSchema = z
     layout: z.array(z.enum(SECTION_IDS)).min(1),
     navbar: navbarSchema,
     footer: footerSchema,
+    // Zod 4 wants the parsed shape here, not the input shape.
+    privacy: privacySchema.default({ extraParagraphs: [] }),
 
     hero: heroSchema.optional(),
     about: aboutSchema.optional(),
