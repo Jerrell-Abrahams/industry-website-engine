@@ -22,7 +22,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const load = (relative) => import(pathToFileURL(join(root, relative)).href);
 
 const { sites } = await load("sites/index.ts");
-const { SiteConfigSchema, FONT_KEYS } = await load("lib/schema.ts");
+const { SiteConfigSchema, FONT_KEYS, TESTIMONIAL_RESTRICTED_TYPES } =
+  await load("lib/schema.ts");
 
 /* ------------------------------------------------------------------ *
  * WCAG contrast
@@ -89,6 +90,8 @@ for (const [id, raw] of Object.entries(sites)) {
 
   const config = result.data;
   const problems = [];
+  // Non-blocking: printed under the site's line, does not affect the exit code.
+  const warnings = [];
 
   // The registry key and the config's own id must agree, because /public/<id>/
   // is derived from the id and a mismatch silently 404s every image.
@@ -114,6 +117,28 @@ for (const [id, raw] of Object.entries(sites)) {
     }
   }
 
+  // HPCSA rules for healthcare and Legal Practice Council rules for attorneys
+  // both restrict testimonial advertising. This is the one such rule a schema
+  // can actually see, so it is enforced rather than documented: a hard failure
+  // on a live site, a warning on a demo so the existing showcase still builds.
+  if (TESTIMONIAL_RESTRICTED_TYPES.includes(config.seo.schemaType) && config.features.testimonials) {
+    const message =
+      `schemaType "${config.seo.schemaType}" is a profession whose advertising rules restrict ` +
+      `testimonials. Set features.testimonials to false, or confirm with the client's regulator.`;
+    if (config.demo) warnings.push(message);
+    else problems.push(message);
+  }
+
+  // ECTA s43: a live site offering services electronically must publish its
+  // legal name and registration number. A warning, not a failure — a sole
+  // proprietor may legitimately have no CIPC number.
+  if (!config.demo) {
+    const missing = ["registeredName", "registrationNumber"].filter((k) => !config.compliance[k]);
+    if (missing.length > 0) {
+      warnings.push(`ECTA s43: compliance.${missing.join(" and compliance.")} not set`);
+    }
+  }
+
   if (problems.length > 0) {
     failed += 1;
     console.error(`\n✗ ${id}`);
@@ -127,6 +152,8 @@ for (const [id, raw] of Object.entries(sites)) {
       `✓ ${id} [${status}] — ${config.layout.length} sections, ${config.business.name}`,
     );
   }
+
+  for (const warning of warnings) console.warn(`    ! ${warning}`);
 }
 
 /* ------------------------------------------------------------------ *

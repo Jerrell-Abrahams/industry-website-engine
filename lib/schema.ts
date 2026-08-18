@@ -473,6 +473,53 @@ const footerSchema = z.object({
 });
 
 /**
+ * Statutory disclosure.
+ *
+ * ECTA s43 requires a business offering services electronically to publish its
+ * legal name and registration number alongside the contact details it already
+ * shows. Sector regulators add one more: PSIRA for security, PPRA for property
+ * practitioners, HPCSA for healthcare, the LPC for attorneys, an FSP number
+ * where policies are sold.
+ *
+ * The universal two are named fields so validate-sites.mjs can check for them.
+ * The sector item is a free list on purpose — a new profession should never
+ * need a schema change.
+ */
+const complianceSchema = z.object({
+  /** Registered legal name, where it differs from the trading name. */
+  registeredName: z.string().optional(),
+  /** CIPC registration number, e.g. "2019/123456/07". */
+  registrationNumber: z.string().optional(),
+  registrations: z
+    .array(z.object({ label: z.string().min(1), value: z.string().min(1) }))
+    .default([]),
+});
+
+/**
+ * Schema.org types whose professions restrict advertising.
+ *
+ * HPCSA rules for healthcare and Legal Practice Council rules for attorneys
+ * both constrain testimonials. validate-sites.mjs fails a live site that
+ * combines one of these with `features.testimonials`.
+ *
+ * This catches only the structural case a schema can see. Superlative claims,
+ * guarantees of outcome and price advertising are restricted too, and still
+ * need a human who knows the rules to read the copy.
+ */
+export const TESTIMONIAL_RESTRICTED_TYPES = [
+  "Physician",
+  "Dentist",
+  "MedicalBusiness",
+  "MedicalClinic",
+  "Optician",
+  "Pharmacy",
+  "PhysiciansOffice",
+  "LegalService",
+  "Attorney",
+  "Notary",
+] as const;
+
+/**
  * POPIA processing notice, rendered at /privacy on live sites only.
  *
  * The Act expects a data subject to be told who is accountable and how to
@@ -578,6 +625,7 @@ export const SiteConfigSchema = z
     footer: footerSchema,
     // Zod 4 wants the parsed shape here, not the input shape.
     privacy: privacySchema.default({ extraParagraphs: [] }),
+    compliance: complianceSchema.default({ registrations: [] }),
 
     hero: heroSchema.optional(),
     about: aboutSchema.optional(),

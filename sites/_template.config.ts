@@ -142,6 +142,13 @@ export const templateConfig: SiteConfigInput = {
   /**
    * A section listed in `layout` whose flag is off is skipped entirely — you do
    * not need to remove it from the layout array to turn a feature off.
+   *
+   * Healthcare and legal clients: `testimonials` must stay false. HPCSA rules
+   * (Physician, Dentist, MedicalClinic ...) and Legal Practice Council rules
+   * (LegalService, Attorney, Notary) both restrict testimonial advertising, and
+   * npm run validate fails a live site that turns it on. Superlative claims and
+   * guarantees of outcome are restricted too — those the schema cannot see, so
+   * have someone who knows the rules read the copy.
    */
   features: {
     booking: false,
@@ -153,6 +160,31 @@ export const templateConfig: SiteConfigInput = {
     map: true,
     faq: true,
   },
+
+  /**
+   * Statutory disclosure, rendered as one line in the footer.
+   *
+   * ECTA s43 wants the legal name and registration number on any site offering
+   * services electronically; npm run validate warns when a live site omits
+   * them. `registrations` is for whatever the client's regulator requires:
+   *   security       { label: "PSIRA", value: "1234567" }
+   *   estate agent   { label: "PPRA FFC", value: "..." }
+   *   healthcare     { label: "HPCSA", value: "MP0123456" }
+   *   attorney       { label: "LPC", value: "..." }
+   *   funeral/policy { label: "FSP", value: "..." }
+   */
+  compliance: {
+    registeredName: "New Client Trading (Pty) Ltd",
+    registrationNumber: "2019/123456/07",
+    registrations: [],
+  },
+
+  /**
+   * POPIA notice at /privacy, published on live sites only. Both officer fields
+   * fall back to the business name and email. Set `lastUpdated` by hand when
+   * the terms change — it is not a build date.
+   */
+  // privacy: { lastUpdated: "1 March 2026" },
 
   seo: {
     title: "New Client Trading | What they do, where they are",

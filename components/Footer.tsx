@@ -20,7 +20,10 @@ export function Footer({ config }: Props) {
 
       <div className="border-t border-line">
         <div className="container-page flex flex-col items-center justify-between gap-3 py-5 text-sm text-muted sm:flex-row">
-          <p>{renderLegal(footer.legal, config.business.name)}</p>
+          <div className="flex flex-col gap-1 text-center sm:text-left">
+            <p>{renderLegal(footer.legal, config.business.name)}</p>
+            <Disclosure config={config} />
+          </div>
           <div className="flex flex-col items-center gap-3 sm:flex-row">
             {/* Demos have no /privacy page to link to — see app/privacy/page.tsx. */}
             {config.demo ? null : (
@@ -190,6 +193,25 @@ function Newsletter({ config }: Props) {
       </form>
     </div>
   );
+}
+
+/**
+ * ECTA s43 disclosure: legal name, registration number and any sector
+ * registration. Renders nothing when a config carries none of them, so demos
+ * and sole traders are unaffected.
+ */
+function Disclosure({ config }: Props) {
+  const { registeredName, registrationNumber, registrations } = config.compliance;
+
+  const parts = [
+    registeredName,
+    registrationNumber ? `Reg. ${registrationNumber}` : null,
+    ...registrations.map((r) => `${r.label} ${r.value}`),
+  ].filter(Boolean);
+
+  if (parts.length === 0) return null;
+
+  return <p className="text-xs opacity-80">{parts.join(" · ")}</p>;
 }
 
 /** Agency credit. Unconditional — demo or paying client, every site carries it. */

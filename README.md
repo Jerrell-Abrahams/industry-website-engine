@@ -139,6 +139,34 @@ form actually collects. `privacy.informationOfficer` and
 reviewed by someone who knows POPIA before it goes on a paying client's site** —
 it is drafted from the Act's general principles, not legal advice.
 
+### Statutory disclosure and sector rules
+
+`compliance` renders one line in the footer and is empty by default, so demos
+and sole traders show nothing.
+
+```ts
+compliance: {
+  registeredName: "Sentinel Response (Pty) Ltd",
+  registrationNumber: "2017/445566/07",       // CIPC, required by ECTA s43
+  registrations: [{ label: "PSIRA", value: "2291847" }],
+}
+```
+
+`npm run validate` **warns** when a live site has no `registeredName` or
+`registrationNumber` — a warning rather than a failure, because a sole
+proprietor may legitimately have no CIPC number.
+
+It **fails** a live site whose `seo.schemaType` is a profession with
+advertising restrictions (`Physician`, `Dentist`, `LegalService`, `Attorney`
+and similar — see `TESTIMONIAL_RESTRICTED_TYPES`) while `features.testimonials`
+is on. HPCSA and Legal Practice Council rules both restrict testimonials, and
+the template would otherwise hand a client a compliance problem. Demos get a
+warning instead, which is why `dentist` still builds.
+
+That check catches the one rule a schema can see. Superlative claims,
+guarantees of outcome and price advertising are restricted too — those need a
+human who knows the rules to read the copy.
+
 ### Variants
 
 Every major section supports several genuinely different layouts, chosen in
