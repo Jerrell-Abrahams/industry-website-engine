@@ -116,9 +116,15 @@ Two flags are not sections:
 ### Demo vs live
 
 `demo` sits at the config root and **defaults to true**, because that is what a
-new config is. A demo shows the "Demo site" pill and is `noindex` in both
-`robots.txt` and page metadata — 19 invented businesses with plausible South
-African addresses do not belong in local search results.
+new config is. A demo shows the "Demo site" pill and carries `noindex` page
+metadata: 19 invented businesses with plausible South African addresses do not
+belong in local search results.
+
+`robots.txt` deliberately still *allows* crawling on demos. `Disallow` only
+stops a crawler fetching the page; it does not stop the URL being indexed from
+an inbound link, and a crawler that never fetches never sees the `noindex`.
+Allowing the fetch is what makes the noindex take effect. The sitemap is
+withheld instead, so nothing is volunteered for crawling.
 
 Setting `demo: false` at sale time drops the pill, allows indexing, and
 publishes the POPIA privacy notice at `/privacy` (with a footer link). Demos

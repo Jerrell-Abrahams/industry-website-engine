@@ -481,6 +481,14 @@ const footerSchema = z.object({
  * separate information officer.
  */
 const privacySchema = z.object({
+  /**
+   * Shown verbatim as "Last updated ...", omitted when absent.
+   *
+   * Authored rather than derived from the build date: a POPIA notice is dated
+   * by when its terms last changed, and a build-time date would silently
+   * re-date it every time an unrelated site is redeployed.
+   */
+  lastUpdated: z.string().optional(),
   informationOfficer: z.string().optional(),
   informationOfficerEmail: z.email().optional(),
   /** Appended verbatim — anything industry-specific, e.g. patient records. */

@@ -82,7 +82,6 @@ export const attorneyConfig: SiteConfigInput = {
     newsletter: false,
     map: true,
     faq: true,
-    openNowBadge: true,
   },
 
   seo: {

@@ -35,18 +35,14 @@ export default function PrivacyPage() {
   const { business, privacy } = config;
   const officer = privacy.informationOfficer ?? business.name;
   const officerEmail = privacy.informationOfficerEmail ?? business.email;
-  const updated = new Date().toLocaleDateString("en-ZA", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
     <Section id="privacy">
-      <div className="container-page mx-auto flex max-w-3xl flex-col gap-6">
+      <div className="mx-auto flex max-w-3xl flex-col gap-6">
         <header className="flex flex-col gap-2">
           <h1 className="font-heading text-3xl font-bold sm:text-4xl">Privacy policy</h1>
-          <p className="text-sm text-muted">Last updated {updated}</p>
+          {privacy.lastUpdated ? (
+            <p className="text-sm text-muted">Last updated {privacy.lastUpdated}</p>
+          ) : null}
         </header>
 
         <P>

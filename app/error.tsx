@@ -13,10 +13,13 @@ import { useEffect } from "react";
  */
 export default function Error({
   error,
-  reset,
+  unstable_retry,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
+  // `reset()` only clears the boundary's state and re-renders the same failed
+  // payload; `unstable_retry()` re-fetches first, which is what "Try again"
+  // has to mean here. Added in next 16.2.
+  unstable_retry: () => void;
 }) {
   useEffect(() => {
     console.error(error);
@@ -29,7 +32,7 @@ export default function Error({
         Sorry — that did not load. Trying again usually sorts it.
       </p>
       <div className="flex flex-wrap items-center justify-center gap-3">
-        <button type="button" onClick={reset} className="btn btn-primary">
+        <button type="button" onClick={() => unstable_retry()} className="btn btn-primary">
           Try again
         </button>
         <Link href="/" className="btn btn-secondary">

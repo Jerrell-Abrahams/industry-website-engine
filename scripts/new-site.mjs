@@ -62,8 +62,10 @@ if (index.includes(`./${id}.config.ts`)) {
 // Imports are alphabetical; slot the new one in rather than appending, so the
 // file does not drift out of the order the linter expects.
 const importLine = `import { ${exportName} } from "./${id}.config.ts";`;
-const imports = [...index.matchAll(/^import \{ \w+ \} from "\.\/[\w.-]+\.ts";$/gm)];
-const before = imports.find((m) => m[0] > importLine);
+const imports = [...index.matchAll(/^import \{ \w+ \} from "(\.\/[\w.-]+\.ts)";$/gm)];
+// Compare the module path, not the whole line: comparing lines sorts on the
+// export name, which drops every new import above "./_test.config.ts".
+const before = imports.find((m) => m[1] > `./${id}.config.ts`);
 
 index = before
   ? index.replace(before[0], `${importLine}\n${before[0]}`)

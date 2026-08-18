@@ -21,8 +21,17 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 const args = process.argv.slice(2);
-const only = args.includes("--only") ? args[args.indexOf("--only") + 1] : null;
 const skipValidate = args.includes("--skip-validate");
+
+// `--only` with no value must not silently degrade into "deploy everything".
+let only = null;
+if (args.includes("--only")) {
+  only = args[args.indexOf("--only") + 1];
+  if (!only || only.startsWith("--")) {
+    console.error("✗ --only needs a site id, e.g. --only barber");
+    process.exit(1);
+  }
+}
 
 const { sites } = await import(pathToFileURL(join(root, "sites", "index.ts")).href);
 
@@ -41,10 +50,11 @@ const targets = only ? [only] : all;
 
 if (!skipValidate) {
   try {
-    execFileSync("node", ["--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "scripts/validate-sites.mjs"], {
-      cwd: root,
-      stdio: "inherit",
-    });
+    execFileSync(
+      "node",
+      ["--disable-warning=MODULE_TYPELESS_PACKAGE_JSON", "scripts/validate-sites.mjs"],
+      { cwd: root, stdio: "inherit" },
+    );
   } catch {
     console.error("\n✗ Validation failed. Nothing deployed.");
     process.exit(1);
@@ -53,9 +63,19 @@ if (!skipValidate) {
 
 /* ---- deploy -------------------------------------------------------- */
 
-const run = (cmd, cmdArgs) =>
-  spawnSync(cmd, cmdArgs, { cwd: root, stdio: "ignore", shell: process.platform === "win32" })
-    .status === 0;
+// Output is captured rather than discarded: when a deploy fails you need the
+// reason, and the retry would otherwise bury the first error entirely.
+let lastOutput = "";
+
+const run = (cmd, cmdArgs) => {
+  const result = spawnSync(cmd, cmdArgs, {
+    cwd: root,
+    encoding: "utf8",
+    shell: process.platform === "win32",
+  });
+  lastOutput = `${result.stdout ?? ""}${result.stderr ?? ""}`.trim();
+  return result.status === 0;
+};
 
 console.log(`\nDeploying ${targets.length} site(s) to production.\n`);
 
@@ -76,6 +96,10 @@ for (const id of targets) {
   } else {
     console.log("FAILED");
     failed.push(id);
+    // Last few lines only — a full vercel build log would drown the summary.
+    for (const line of lastOutput.split(/\r?\n/).slice(-8)) {
+      if (line.trim()) console.log(`      ${line}`);
+    }
   }
 }
 
