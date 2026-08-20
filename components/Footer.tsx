@@ -31,6 +31,16 @@ export function Footer({ config }: Props) {
                 Privacy
               </a>
             )}
+            {config.admin ? (
+              <a
+                href={config.admin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="whitespace-nowrap transition-colors hover:text-primary"
+              >
+                {config.admin.label}
+              </a>
+            ) : null}
             <PoweredBy config={config} />
             <Socials config={config} />
           </div>

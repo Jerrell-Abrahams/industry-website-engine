@@ -19,9 +19,10 @@ import { cn, telHref } from "@/lib/utils";
 type Props = {
   navbar: NavbarContent;
   business: Pick<SiteConfig["business"], "name" | "phone" | "logo">;
+  admin?: SiteConfig["admin"];
 };
 
-export function Navbar({ navbar, business }: Props) {
+export function Navbar({ navbar, business, admin }: Props) {
   const [scrolled, setScrolled] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -54,7 +55,7 @@ export function Navbar({ navbar, business }: Props) {
         )}
       >
         {navbar.variant === "centered-logo" ? (
-          <CenteredLogo navbar={navbar} business={business} onDark={onDark} />
+          <CenteredLogo navbar={navbar} business={business} admin={admin} onDark={onDark} />
         ) : (
           <>
             <Logo business={business} onDark={onDark} />
@@ -66,6 +67,7 @@ export function Navbar({ navbar, business }: Props) {
               ))}
             </ul>
             <div className="hidden items-center gap-4 lg:flex">
+              {admin ? <AdminLink admin={admin} onDark={onDark} /> : null}
               {navbar.showPhone ? <PhoneLink phone={business.phone} onDark={onDark} /> : null}
               {navbar.cta ? (
                 <a href={navbar.cta.href} className="btn btn-primary">
@@ -129,6 +131,17 @@ export function Navbar({ navbar, business }: Props) {
               <Phone size={18} aria-hidden="true" />
               {business.phone}
             </a>
+            {admin ? (
+              <a
+                href={admin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => dialog.current?.close()}
+                className="text-sm text-muted underline-offset-4 hover:underline"
+              >
+                {admin.label}
+              </a>
+            ) : null}
             {navbar.cta ? (
               <a
                 href={navbar.cta.href}
@@ -147,7 +160,7 @@ export function Navbar({ navbar, business }: Props) {
 
 /* ------------------------------------------------------------------ */
 
-function CenteredLogo({ navbar, business, onDark }: Props & { onDark: boolean }) {
+function CenteredLogo({ navbar, business, admin, onDark }: Props & { onDark: boolean }) {
   const mid = Math.ceil(navbar.links.length / 2);
 
   return (
@@ -168,8 +181,43 @@ function CenteredLogo({ navbar, business, onDark }: Props & { onDark: boolean })
             <NavLink href={link.href} label={link.label} onDark={onDark} />
           </li>
         ))}
+        {admin ? (
+          <li>
+            <AdminLink admin={admin} onDark={onDark} />
+          </li>
+        ) : null}
       </ul>
     </div>
+  );
+}
+
+/**
+ * Deliberately quieter than the nav links and the CTA.
+ *
+ * This sits on a public page every customer sees, not a private dashboard. It
+ * has to be findable by the one person who needs it without making anyone else
+ * wonder whether it is for them, and without competing with the call-to-action
+ * the page exists to drive.
+ */
+function AdminLink({
+  admin,
+  onDark,
+}: {
+  admin: NonNullable<Props["admin"]>;
+  onDark: boolean;
+}) {
+  return (
+    <a
+      href={admin.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cn(
+        "text-sm underline-offset-4 transition-opacity hover:underline",
+        onDark ? "text-white/70 hover:text-white" : "text-muted hover:text-primary",
+      )}
+    >
+      {admin.label}
+    </a>
   );
 }
 

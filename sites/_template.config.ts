@@ -162,6 +162,18 @@ export const templateConfig: SiteConfigInput = {
   },
 
   /**
+   * Link to this client's admin app, which lives in its own repo.
+   *
+   * Omit the block entirely and no link renders. Set it and a quiet "Admin"
+   * link appears in the header (desktop, mobile drawer) and the footer,
+   * opening in a new tab. `label` defaults to "Admin".
+   *
+   * This config is public and ships in the HTML, so the URL is visible to
+   * anyone viewing source. Plain address only — never a token or key.
+   */
+  // admin: { url: "https://admin.example.co.za/newclient", label: "Client login" },
+
+  /**
    * Statutory disclosure, rendered as one line in the footer.
    *
    * ECTA s43 wants the legal name and registration number on any site offering

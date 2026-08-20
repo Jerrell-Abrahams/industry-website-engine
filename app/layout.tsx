@@ -85,7 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
 
-        <Navbar navbar={config.navbar} business={business} />
+        <Navbar navbar={config.navbar} business={business} admin={config.admin} />
 
         <main id="main" className="flex-1">
           {children}

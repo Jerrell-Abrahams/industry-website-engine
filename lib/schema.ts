@@ -473,6 +473,24 @@ const footerSchema = z.object({
 });
 
 /**
+ * Link to this client's admin application, which lives in its own repo.
+ *
+ * The whole object is optional and `url` is required inside it, so there is no
+ * way to end up with a switch turned on and no destination, or a destination
+ * that never renders. Set it and the link appears in the header and footer;
+ * omit it and nothing does.
+ *
+ * Config is public — it ships in the HTML and the repo is public — so this URL
+ * is visible to anyone who views source. That is fine for a plain address to an
+ * app with its own login. It must never carry a token, key or client secret.
+ */
+const adminSchema = z.object({
+  url: z.url(),
+  /** "Admin" is right for you; a client may read "Client login" more naturally. */
+  label: z.string().min(1).default("Admin"),
+});
+
+/**
  * Statutory disclosure.
  *
  * ECTA s43 requires a business offering services electronically to publish its
@@ -626,6 +644,7 @@ export const SiteConfigSchema = z
     // Zod 4 wants the parsed shape here, not the input shape.
     privacy: privacySchema.default({ extraParagraphs: [] }),
     compliance: complianceSchema.default({ registrations: [] }),
+    admin: adminSchema.optional(),
 
     hero: heroSchema.optional(),
     about: aboutSchema.optional(),

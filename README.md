@@ -139,6 +139,27 @@ form actually collects. `privacy.informationOfficer` and
 reviewed by someone who knows POPIA before it goes on a paying client's site** —
 it is drafted from the Act's general principles, not legal advice.
 
+### Admin link
+
+Optional. Points at the client's admin application, which is a separate repo.
+
+```ts
+admin: { url: "https://admin.example.co.za/newclient", label: "Client login" },
+```
+
+The whole block is optional and `url` is required inside it, so a switch
+cannot be on with no destination. When set, a deliberately quiet link renders
+in three places — the desktop header, the mobile drawer and the footer —
+opening in a new tab. It is styled below the nav links and the CTA on purpose:
+every customer visiting the site sees it, and it should not compete with the
+call to action or make anyone wonder whether it is for them.
+
+`label` defaults to `Admin`.
+
+**The URL is public.** Configs ship in the HTML and this repo is public, so
+anyone can read it. That is fine for an address to an app with its own login;
+it must never contain a token, key or client secret.
+
 ### Statutory disclosure and sector rules
 
 `compliance` renders one line in the footer and is empty by default, so demos
