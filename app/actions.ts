@@ -3,6 +3,7 @@
 import { z } from "zod";
 
 import { getSiteConfig } from "@/lib/site";
+import { fromHeader } from "@/lib/utils";
 
 /**
  * Contact / booking submission.
@@ -161,7 +162,12 @@ export async function submitEnquiry(
         // and deliverable for every client. Resend's onboarding@resend.dev
         // sandbox sender was not: it is shared, unaligned, and lands in spam.
         // Override per project only when a client's own domain is verified.
-        from: process.env.CONTACT_FROM_EMAIL ?? "enquiries@complexai.co.za",
+        // Shows in the client's inbox as their own business name rather than a
+        // bare agency address.
+        from: fromHeader(
+          config.business.name,
+          process.env.CONTACT_FROM_EMAIL ?? "enquiries@complexai.co.za",
+        ),
         to: [to],
         // So the client can hit reply in their inbox and reach the customer.
         reply_to: enquiry.email,

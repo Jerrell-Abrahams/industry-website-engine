@@ -38,6 +38,23 @@ export function renderLegal(template: string, businessName: string): string {
     .replaceAll("{business}", businessName);
 }
 
+/**
+ * RFC 5322 From header with a display name.
+ *
+ * The name is quoted and escaped because a business name is arbitrary text: an
+ * unescaped comma splits the header into two addresses and the send fails, and
+ * a stray double quote does the same. "Smith, Jones & Co" is a real kind of
+ * name, so this is not hypothetical.
+ *
+ * An address that already carries its own display name is passed through
+ * untouched, so CONTACT_FROM_EMAIL can be set to a full header if needed.
+ */
+export function fromHeader(displayName: string, address: string): string {
+  if (address.includes("<")) return address;
+  const escaped = displayName.replace(/["\\]/g, "");
+  return `"${escaped}" <${address}>`;
+}
+
 /** The agency behind the engine. Both the footer credit and the demo pill point here. */
 export const AGENCY = { name: "Complex AI", url: "https://complexai.co.za" } as const;
 

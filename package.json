@@ -12,10 +12,11 @@
     "check-variants": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-variants.mjs",
     "placeholders": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-placeholders.mjs",
     "photos": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/fetch-photos.mjs",
-    "check": "npm run validate && npm run check-variants && npm run typecheck && npm run build",
+    "check": "npm run validate && npm run check-variants && npm run check-from && npm run typecheck && npm run build",
     "sheets": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/contact-sheet.mjs",
     "new": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/new-site.mjs",
-    "deploy:all": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/deploy-all.mjs"
+    "deploy:all": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/deploy-all.mjs",
+    "check-from": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-from-header.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
