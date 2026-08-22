@@ -157,7 +157,11 @@ export async function submitEnquiry(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: process.env.CONTACT_FROM_EMAIL ?? "onboarding@resend.dev",
+        // complexai.co.za is verified in Resend, so this is aligned for SPF/DKIM
+        // and deliverable for every client. Resend's onboarding@resend.dev
+        // sandbox sender was not: it is shared, unaligned, and lands in spam.
+        // Override per project only when a client's own domain is verified.
+        from: process.env.CONTACT_FROM_EMAIL ?? "enquiries@complexai.co.za",
         to: [to],
         // So the client can hit reply in their inbox and reach the customer.
         reply_to: enquiry.email,

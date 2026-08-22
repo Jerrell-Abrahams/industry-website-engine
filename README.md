@@ -373,7 +373,7 @@ Each client is a separate Vercel project pointing at **this same repository**.
    | `NEXT_PUBLIC_SITE` | `newclient` |
    | `RESEND_API_KEY` | your Resend key (optional) |
    | `CONTACT_TO_EMAIL` | where enquiries go (defaults to `business.email`) |
-   | `CONTACT_FROM_EMAIL` | an address on a Resend-verified domain |
+   | `CONTACT_FROM_EMAIL` | optional; defaults to `enquiries@complexai.co.za`. Set only when the client's own domain is verified in Resend |
 
 4. Deploy, then point the client's domain at the project.
 
