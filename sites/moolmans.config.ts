@@ -127,7 +127,7 @@ export const moolmansConfig: SiteConfigInput = {
     map: true,
     openNowBadge: true,
     booking: false,
-    gallery: false,
+    gallery: true,
     testimonials: false,
     // Not for auto-electrical prices — those stay quote-only, see `services`
     // above. This is for the tree felling offer below, which is a real
@@ -148,6 +148,9 @@ export const moolmansConfig: SiteConfigInput = {
       "car wiring fault Glen Marais",
       "computer diagnostics Kempton Park",
       "ABS airbag diagnostics Gauteng",
+      "Fault Finding Kempton Park",
+      "Kempton Park auto electrical",
+      "Kempton Park car electrical repairs",
     ],
     ogImage: "/moolmans/og.svg",
     schemaType: "AutoRepair",
@@ -156,7 +159,7 @@ export const moolmansConfig: SiteConfigInput = {
     url: "https://moolmansauto.co.za",
   },
 
-  layout: ["hero", "services", "highlights", "about", "pricing", "faq", "contact", "cta"],
+  layout: ["hero", "services", "highlights", "about", "pricing", "gallery", "faq", "contact", "cta"],
 
   navbar: {
     variant: "solid",
@@ -165,6 +168,7 @@ export const moolmansConfig: SiteConfigInput = {
       { label: "Why us", href: "#highlights" },
       { label: "About", href: "#about" },
       { label: "Other services", href: "#pricing" },
+      { label: "Our work", href: "#gallery" },
       { label: "Find us", href: "#contact" },
     ],
     cta: { label: "WhatsApp us", href: "https://wa.me/27827549758" },
@@ -358,9 +362,10 @@ export const moolmansConfig: SiteConfigInput = {
           "Stump removal",
           "Debris removal and disposal",
         ],
+        // Real job photo, not stock — see the gallery below for more.
         image: {
           src: "/moolmans/tree-felling.jpg",
-          alt: "A tree being felled by a professional with a chainsaw",
+          alt: "A worker on a ladder cutting near the crown of a large ornamental palm with a chainsaw",
         },
         cta: {
           label: "WhatsApp for a tree quote",
@@ -373,6 +378,7 @@ export const moolmansConfig: SiteConfigInput = {
         name: "Appliance Repairs",
         price: "Request a quote",
         features: [
+          "Fault finding",
           "Washing machines",
           "Tumble dryers",
           "Stoves",
@@ -389,6 +395,51 @@ export const moolmansConfig: SiteConfigInput = {
           label: "WhatsApp for an appliance quote",
           href: "https://wa.me/27827549758?text=Hi%20Moolmans%2C%20I%27d%20like%20a%20quote%20for%20an%20appliance%20repair",
         },
+      },
+    ],
+  },
+
+  // Real job photos the client sent over, picked for variety across the
+  // different tree types and jobs rather than for any one being the "best" —
+  // masonry because they're all phone-camera portrait shots of differing
+  // heights, which is exactly what that layout is for.
+  gallery: {
+    variant: "masonry",
+    eyebrow: "Tree felling",
+    heading: "Recent jobs",
+    intro: "A few jobs from around the area.",
+    images: [
+      {
+        src: "/moolmans/tree-gallery-1.jpg",
+        alt: "A tall ornamental palm being pruned from a ladder beside a two-storey house, with the work vehicle parked on the street",
+      },
+      {
+        src: "/moolmans/tree-gallery-2.jpg",
+        alt: "Two workers at the base of a tall palm tree with a ladder extended into the crown",
+      },
+      {
+        src: "/moolmans/tree-gallery-3.jpg",
+        alt: "A palm tree with a freshly pruned, healthy crown against a clear sky",
+      },
+      {
+        src: "/moolmans/tree-gallery-4.jpg",
+        alt: "A freshly cut tree stump and sawn log, with felled branches loaded onto the truck behind",
+      },
+      {
+        src: "/moolmans/tree-gallery-5.jpg",
+        alt: "A worker on a ladder in a bare tree holding a freshly cut branch section",
+      },
+      {
+        src: "/moolmans/tree-gallery-6.jpg",
+        alt: "A worker on a ladder cutting a branch with a chainsaw, high in a bare tree",
+      },
+      {
+        src: "/moolmans/tree-gallery-7.jpg",
+        alt: "Workers at the base of a large bare tree and a tall cypress, mid-job",
+      },
+      {
+        src: "/moolmans/tree-gallery-8.jpg",
+        alt: "A worker using a chainsaw to cut down a fire-damaged tree stump against a brick wall",
       },
     ],
   },
