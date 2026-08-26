@@ -276,9 +276,18 @@
   }
 }
 
-/* Vertical rhythm, driven by branding.spacingScale. */
+/*
+ * Vertical rhythm, driven by branding.spacingScale.
+ *
+ * `--brand-section-y` is the value authored for desktop — applied unscaled it
+ * was also the value on a 375px phone, where two sections' padding alone ran
+ * to 176px (spacingScale "normal") before either section's actual content.
+ * The clamp ramps from half that value up to the full one as the viewport
+ * grows, so small screens get a proportionally smaller gap and anything at
+ * tablet width or wider looks exactly as it did before.
+ */
 @utility section-y {
-  padding-block: var(--brand-section-y);
+  padding-block: clamp(calc(var(--brand-section-y) * 0.5), 10vw, var(--brand-section-y));
 }
 
 @utility container-page {

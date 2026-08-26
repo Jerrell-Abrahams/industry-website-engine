@@ -17,6 +17,7 @@ import { guesthouseConfig } from "./guesthouse.config.ts";
 import { gymConfig } from "./gym.config.ts";
 import { holidayConfig } from "./holiday.config.ts";
 import { mechanicConfig } from "./mechanic.config.ts";
+import { moolmansConfig } from "./moolmans.config.ts";
 import { plumberConfig } from "./plumber.config.ts";
 import { restaurantConfig } from "./restaurant.config.ts";
 import { securityConfig } from "./security.config.ts";
@@ -60,6 +61,8 @@ export const sites: Record<string, SiteConfigInput> = {
   construction: constructionConfig,
   turbo: turboConfig,
   funeral: funeralConfig,
+
+  moolmans: moolmansConfig,
 
   /** Engine fixture, not a client. Renders every section in one page. */
   "engine-test": testConfig,

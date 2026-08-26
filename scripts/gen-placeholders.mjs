@@ -45,10 +45,12 @@ function collect(config) {
   add(config.business.logo, "brand");
   add(config.hero?.image, "hero");
   add(config.about?.image, "about");
+  config.about?.images.forEach((image) => add(image, "about"));
   add(config.booking?.image, "booking");
   add(config.cta?.image, "cta");
 
   config.services?.items.forEach((item) => add(item.image, "service"));
+  config.pricing?.plans.forEach((plan) => add(plan.image, "service"));
   config.gallery?.images.forEach((image) => add(image, "gallery"));
   config.team?.members.forEach((member) => add(member.image, "team"));
   config.testimonials?.items.forEach((item) => add(item.image, "avatar"));

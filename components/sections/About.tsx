@@ -85,7 +85,15 @@ function Stacked({ about }: { about: AboutContent }) {
         <Body about={about} className="max-w-3xl text-center" />
         {about.cta ? <Button href={about.cta.href}>{about.cta.label}</Button> : null}
       </div>
-      {about.image ? (
+      {about.images.length > 0 ? (
+        <div className="mt-14 grid gap-4 sm:grid-cols-3">
+          {about.images.map((img) => (
+            <div key={img.src} className="relative aspect-4/3 overflow-hidden rounded-brand">
+              <Picture image={img} sizes="(max-width: 640px) 100vw, 33vw" />
+            </div>
+          ))}
+        </div>
+      ) : about.image ? (
         <div className="relative mt-14 aspect-21/9 overflow-hidden rounded-brand">
           <Picture image={about.image} sizes="100vw" />
         </div>

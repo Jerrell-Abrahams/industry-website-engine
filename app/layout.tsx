@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 
 import { DemoPill } from "@/components/DemoPill";
 import { Footer } from "@/components/Footer";
+import { GoogleReviewButton } from "@/components/GoogleReviewButton";
 import { Navbar } from "@/components/Navbar";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { FaqJsonLd, JsonLd } from "@/lib/jsonld";
@@ -97,7 +98,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <WhatsAppButton number={business.whatsapp} businessName={business.name} />
         ) : null}
 
-        {config.demo ? <DemoPill siteId={config.id} /> : null}
+        {business.googleReviewUrl ? (
+          <GoogleReviewButton url={business.googleReviewUrl} businessName={business.name} />
+        ) : null}
+
+        {config.demo ? <DemoPill siteId={config.id} label={config.demoLabel} /> : null}
 
         {/* Cookieless, so it needs no consent banner — see the POPIA notice at /privacy. */}
         {features.analytics ? <Analytics /> : null}

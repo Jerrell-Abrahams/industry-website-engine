@@ -1,4 +1,4 @@
-import { Button, Card, Section, SectionHeader } from "@/components/ui";
+import { Button, Card, Picture, Section, SectionHeader } from "@/components/ui";
 import { Icon } from "@/lib/icon";
 import type { PricingContent, SiteConfig } from "@/lib/schema";
 import { cn } from "@/lib/utils";
@@ -48,7 +48,19 @@ function Price({ plan }: { plan: PricingContent["plans"][number] }) {
 
 function Cards({ pricing }: { pricing: PricingContent }) {
   return (
-    <ul className="grid items-start gap-[var(--brand-gap)] md:grid-cols-3">
+    <ul
+      className={cn(
+        "grid items-start gap-[var(--brand-gap)]",
+        // Fewer than 3 plans in a 3-column grid strands them on the left with
+        // empty tracks beside them — centred and width-capped instead, so 1 or
+        // 2 real cards read as a deliberate callout rather than a sparse grid.
+        pricing.plans.length >= 3
+          ? "md:grid-cols-3"
+          : pricing.plans.length === 2
+            ? "mx-auto max-w-2xl md:grid-cols-2"
+            : "mx-auto max-w-sm",
+      )}
+    >
       {pricing.plans.map((plan) => (
         <li key={plan.name}>
           <Card
@@ -59,6 +71,11 @@ function Cards({ pricing }: { pricing: PricingContent }) {
               plan.featured && "ring-2 ring-primary",
             )}
           >
+            {plan.image ? (
+              <div className="relative -mx-7 -mt-7 aspect-4/3 overflow-hidden rounded-t-brand">
+                <Picture image={plan.image} sizes="(max-width: 768px) 100vw, 33vw" />
+              </div>
+            ) : null}
             <div className="flex items-center justify-between gap-3">
               <h3 className="text-xl font-bold">{plan.name}</h3>
               {plan.featured ? (

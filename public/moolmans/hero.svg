@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-label="New Client Trading — hero 1920×1080">
+  <defs>
+    <linearGradient id="g" gradientTransform="rotate(51)">
+      <stop offset="0%" stop-color="#1F5F4B"/>
+      <stop offset="100%" stop-color="#123A2E"/>
+    </linearGradient>
+    <clipPath id="c"><rect width="1920" height="1080"/></clipPath>
+  </defs>
+  <rect width="1920" height="1080" fill="url(#g)"/>
+  <g clip-path="url(#c)" opacity="0.32">
+    <circle cx="1026" cy="462" r="437" fill="#A9761E"/>
+    <circle cx="894" cy="618" r="262" fill="#1F5F4B"/>
+  </g>
+  <text x="960" y="540" fill="#ffffff" fill-opacity="0.72"
+        font-family="system-ui, sans-serif" font-size="49" font-weight="600"
+        text-anchor="middle" dominant-baseline="middle" letter-spacing="1">New Client Trading — hero 1920×1080</text>
+</svg>

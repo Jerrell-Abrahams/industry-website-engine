@@ -128,8 +128,21 @@ const businessSchema = z.object({
   email: z.email(),
   /** International format without +, e.g. "27821234567". */
   whatsapp: z.string().regex(/^\d{8,15}$/).optional(),
+  /**
+   * Deep link to the Google review composer for this business, e.g. from
+   * Business Profile's "Ask for reviews", or `search.google.com/local/writereview`.
+   * Optional — powers a floating "Leave a review" button next to the WhatsApp
+   * one, the same way `whatsapp` above powers that button rather than living
+   * only in `socialLinks`.
+   */
+  googleReviewUrl: z.url().optional(),
   address: z.object({
-    street: z.string().min(1),
+    /**
+     * Optional: a callout trade may have no address it wants customers driving
+     * to, and inventing one for a real client is worse than omitting it.
+     * formatAddress() drops it and JSON.stringify drops the JSON-LD key.
+     */
+    street: z.string().min(1).optional(),
     suburb: z.string().optional(),
     city: z.string().min(1),
     province: z.string().optional(),
@@ -264,6 +277,12 @@ const aboutSchema = z.object({
   heading: z.string().min(1),
   body: z.array(z.string().min(1)).min(1, "At least one paragraph"),
   image: image.optional(),
+  /**
+   * A row of smaller photos instead of the one large banner `image` renders.
+   * "stacked" only: when this has entries it replaces `image` rather than
+   * supplementing it, so a config sets one or the other, not both.
+   */
+  images: z.array(image).default([]),
   stats: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
   cta: cta.optional(),
 });
@@ -339,6 +358,8 @@ const pricingSchema = z.object({
         features: z.array(z.string()).default([]),
         featured: z.boolean().default(false),
         cta: cta.optional(),
+        /** Rendered by the "cards" variant only — table, simple-list and comparison-strip ignore it. */
+        image: image.optional(),
       }),
     )
     .min(1),
@@ -633,6 +654,15 @@ export const SiteConfigSchema = z
      * itself would go on posing as a real business in Google.
      */
     demo: z.boolean().default(true),
+    /**
+     * Overrides the pill's text while `demo` is true. Defaults to "Demo site".
+     *
+     * A sold client site kept out of the index for client review (not an
+     * unsold showcase) reads better as e.g. "In Development" — same
+     * noindex/no-sitemap behaviour as any other demo, different label so the
+     * client doesn't mistake their own site-in-progress for a template pitch.
+     */
+    demoLabel: z.string().optional(),
 
     business: businessSchema,
     branding: brandingSchema,

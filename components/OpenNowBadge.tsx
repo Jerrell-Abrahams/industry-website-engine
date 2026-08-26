@@ -77,14 +77,17 @@ export function OpenNowBadge({ hours }: { hours: SiteConfig["business"]["busines
   if (open === undefined) return null;
 
   return (
+    // Site tokens rather than a fixed green: no single green clears 4.5:1 on
+    // both a white and a near-black page, and primaryColor is already
+    // contrast-checked against the background by validate-sites.mjs.
     <span
       className={`ml-auto inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${
-        open ? "bg-green-600/10 text-green-700" : "bg-neutral-500/10 text-muted"
+        open ? "bg-primary/10 text-primary" : "bg-muted/10 text-muted"
       }`}
     >
       <span
         aria-hidden="true"
-        className={`size-1.5 rounded-full ${open ? "bg-green-600" : "bg-neutral-500"}`}
+        className={`size-1.5 rounded-full ${open ? "bg-primary" : "bg-current opacity-60"}`}
       />
       {open ? "Open now" : "Closed"}
     </span>
