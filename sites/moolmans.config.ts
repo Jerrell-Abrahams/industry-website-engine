@@ -155,8 +155,7 @@ export const moolmansConfig: SiteConfigInput = {
     ogImage: "/moolmans/og.svg",
     schemaType: "AutoRepair",
     locale: "en_ZA",
-    // CLIENT: domain. Placeholder until one is registered.
-    url: "https://moolmansauto.co.za",
+    url: "https://moolmansservices.co.za",
   },
 
   layout: ["hero", "services", "highlights", "about", "pricing", "gallery", "faq", "contact", "cta"],
