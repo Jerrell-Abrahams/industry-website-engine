@@ -34,13 +34,8 @@ import type { SiteConfigInput } from "@/lib/schema";
 export const moolmansConfig: SiteConfigInput = {
   id: "moolmans",
 
-  // Sent to the client for review, not indexed yet — `demo` still gates that,
-  // same as an unsold showcase. The label is the only thing that changes:
-  // this is their own site in progress, not a template pitch. Flip `demo` to
-  // false once they sign off, at which point also fill in `compliance` below
-  // (see the ECTA note on that field).
-  demo: true,
-  demoLabel: "In Development",
+  // Client signed off 2026-09-23 — live and indexable.
+  demo: false,
 
   business: {
     name: "Moolmans Services",
